@@ -5,21 +5,21 @@ plugins {
 
 android {
   namespace = "com.example.comp4521_project_gp4"
-  compileSdk = 34
-
+  compileSdk = 31
+  
   defaultConfig {
     applicationId = "com.example.comp4521_project_gp4"
-    minSdk = 30
-    targetSdk = 34
+    minSdk = 31
+    targetSdk = 31
     versionCode = 1
     versionName = "1.0"
-
+    
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     vectorDrawables {
       useSupportLibrary = true
     }
   }
-
+  
   buildTypes {
     release {
       isMinifyEnabled = false
@@ -30,8 +30,8 @@ android {
     }
   }
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
   }
   kotlinOptions {
     jvmTarget = "1.8"
@@ -50,7 +50,7 @@ android {
 }
 
 dependencies {
-
+  
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.lifecycle.runtime.ktx)
   implementation(libs.androidx.activity.compose)
