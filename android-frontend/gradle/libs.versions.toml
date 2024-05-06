@@ -2,6 +2,7 @@
 agp = "8.3.2"
 dynamodb = "1.2.5"
 kotlin = "1.9.0"
+cognitoidentityprovider = "1.2.5"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -13,6 +14,7 @@ composeBom = "2024.05.00"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 dynamodb = { group = "aws.sdk.kotlin", name = "dynamodb", version.ref = "dynamodb" }
+cognitoidentityprovider = { group = "aws.sdk.kotlin", name = "cognitoidentityprovider", version.ref = "cognitoidentityprovider" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
