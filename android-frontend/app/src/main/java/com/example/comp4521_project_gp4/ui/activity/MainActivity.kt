@@ -1,4 +1,4 @@
-package com.example.comp4521_project_gp4
+package com.example.comp4521_project_gp4.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
