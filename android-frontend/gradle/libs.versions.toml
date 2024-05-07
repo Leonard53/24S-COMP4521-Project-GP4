@@ -1,8 +1,8 @@
 [versions]
 agp = "8.3.2"
-dynamodb = "1.2.5"
+dynamodb = "1.2.6"
 kotlin = "1.9.0"
-cognitoidentityprovider = "1.2.5"
+cognitoidentityprovider = "1.2.6"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
