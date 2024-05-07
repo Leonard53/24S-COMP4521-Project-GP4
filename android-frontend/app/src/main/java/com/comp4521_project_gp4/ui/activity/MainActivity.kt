@@ -1,4 +1,4 @@
-package com.example.comp4521_project_gp4.ui.activity
+package com.comp4521_project_gp4.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.comp4521_project_gp4.ui.theme.COMP4521ProjectGP4Theme
+import com.comp4521_project_gp4.ui.theme.COMP4521ProjectGP4Theme
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {

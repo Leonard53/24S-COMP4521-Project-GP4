@@ -13,7 +13,7 @@
       android:theme="@style/Theme.COMP4521ProjectGP4"
       tools:targetApi="31">
     <activity
-        android:name=".ui.activity.MainActivity"
+        android:name="com.comp4521_project_gp4.ui.activity.MainActivity"
         android:exported="true"
         android:label="@string/app_name"
         android:theme="@style/Theme.COMP4521ProjectGP4">

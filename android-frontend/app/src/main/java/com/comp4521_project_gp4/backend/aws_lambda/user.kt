@@ -1,7 +1,5 @@
-package comp4521_project_gp4_backend.aws_lambda
+package com.comp4521_project_gp4.backend.aws_lambda
 
-import aws.sdk.kotlin.services.cognitoidentityprovider.CognitoIdentityProviderClient
-import aws.sdk.kotlin.services.cognitoidentityprovider.model.GetUserRequest
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.AttributeAction
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue

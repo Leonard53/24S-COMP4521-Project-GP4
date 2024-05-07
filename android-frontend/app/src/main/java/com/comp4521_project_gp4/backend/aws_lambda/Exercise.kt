@@ -1,4 +1,4 @@
-package comp4521_project_gp4_backend.aws_lambda
+package com.comp4521_project_gp4.backend.aws_lambda
 
 val EXECERCISE_TABLE_NAME = "comp4521-exercise-db"
 

@@ -1,4 +1,4 @@
-package com.example.comp4521_project_gp4.ui.theme
+package com.comp4521_project_gp4.ui.theme
 
 import android.app.Activity
 import android.os.Build
