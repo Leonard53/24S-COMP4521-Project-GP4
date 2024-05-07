@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-  namespace = "com.example.comp4521_project_gp4"
+  namespace = "com.comp4521_project_gp4"
   compileSdk = 34
   
   defaultConfig {
