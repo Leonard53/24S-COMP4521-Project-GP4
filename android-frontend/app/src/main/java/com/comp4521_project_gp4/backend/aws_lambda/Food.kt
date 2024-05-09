@@ -3,21 +3,19 @@ package com.comp4521_project_gp4.backend.aws_lambda
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
+import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
-import aws.smithy.kotlin.runtime.util.toNumber
 
-data class Exercise(
+data class Food(
   val date: String,
-  val exerciseName: String,
-  val exerciseLengthInMins: UInt,
-  val calories: UInt
+  val foodName: String,
+  val foodCalories: UInt
 ) : ExerciseOrFood() {
   override fun convertToMap(): MutableMap<String, AttributeValue> {
     val returnMap = mutableMapOf<String, AttributeValue>()
     returnMap["date"] = AttributeValue.S(date)
-    returnMap["name"] = AttributeValue.S(exerciseName)
-    returnMap["length"] = AttributeValue.N(exerciseLengthInMins.toString())
-    returnMap["calories"] = AttributeValue.N(calories.toString())
+    returnMap["name"] = AttributeValue.S(foodName)
+    returnMap["calories"] = AttributeValue.N(foodCalories.toString())
     return returnMap
   }
   
@@ -27,33 +25,33 @@ data class Exercise(
     val req = UpdateItemRequest {
       tableName = USERDB_NAME
       key = user.getCurrentUserKeyInDB()
-      updateExpression = "SET food_log = list_append(food_log, :newItem)"
+      updateExpression = "SET exercise_log = list_append(exercise_log, :newItem)"
       expressionAttributeValues = updateItem
     }
     return req
   }
   
-  suspend fun getAllExercises(user: User): MutableList<Exercise> {
+  suspend fun getAllFood(user: User): MutableList<Food> {
     val getItemRequest = GetItemRequest {
       tableName = USERDB_NAME
       key = user.getCurrentUserKeyInDB()
     }
     val ddb = DynamoDbClient { region = "ap-east-1" }
-    val exerciseLogsInDB: MutableList<Exercise> = mutableListOf()
+    val foodLogsInDB: MutableList<Food> = mutableListOf()
+    
     try {
       val res = ddb.getItem(getItemRequest)
-      val logObtained = res.item?.get("exercise_log")?.asL()
+      val logObtained = res.item?.get("food_log")?.asL()
       logObtained?.forEach { currentList ->
         val returnMap = currentList.asM()
         val date = returnMap["date"]?.asS() ?: ""
         val name = returnMap["name"]?.asS() ?: ""
-        val length = returnMap["length"]?.asN()?.toUInt() ?: 0u
         val calories = returnMap["calories"]?.asN()?.toUInt() ?: 0u
-        val newExercise = Exercise(date, name, length, calories)
-        exerciseLogsInDB.add(newExercise)
+        val newExercise = Food(date, name, calories)
+        foodLogsInDB.add(newExercise)
       }
     } catch (_: Exception) {
     }
-    return exerciseLogsInDB
+    return foodLogsInDB
   }
 }

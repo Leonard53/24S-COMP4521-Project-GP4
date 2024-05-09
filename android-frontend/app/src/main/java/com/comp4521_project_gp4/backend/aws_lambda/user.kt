@@ -1,72 +1,76 @@
 package com.comp4521_project_gp4.backend.aws_lambda
 
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
-import aws.sdk.kotlin.services.dynamodb.model.AttributeAction
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
-import aws.sdk.kotlin.services.dynamodb.model.AttributeValueUpdate
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
-import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
-import java.lang.Exception
+import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
+import aws.smithy.kotlin.runtime.util.type
+import kotlin.Exception
+
+const val USERDB_NAME = "COMP4521-user-db"
 
 class User(private val userName: String) {
   private val currentUserKeyInDB = mutableMapOf("username" to AttributeValue.S(this.userName))
-  private var currentUserExerciseCache = mutableListOf(mutableMapOf<String, AttributeValue>())
+  fun getCurrentUserKeyInDB(): MutableMap<String, AttributeValue.S> {
+    return currentUserKeyInDB
+  }
+  
+  private val currentUserExerciseCache = mutableListOf<Exercise>()
+  fun addCurrentUserExerciseCache(exercise: Exercise) {
+    currentUserExerciseCache.add(exercise)
+  }
+  
+  fun getCurrentUserExerciseCache(): MutableList<Exercise> {
+    return currentUserExerciseCache
+  }
+  
+  private val currentUserFoodCache = mutableListOf<Food>()
+  fun addCurrentUserFoodCache(food: Food) {
+    currentUserFoodCache.add(food)
+  }
+  
+  
+  fun getCurrentUserFoodCache(): MutableList<Food> {
+    return currentUserFoodCache
+  }
+  
   private val ddb = DynamoDbClient { region = "ap-east-1" }
   
-  init {
-    suspend {
-      val existingExerciseLog = getAllExercises()
-      if (existingExerciseLog.isEmpty()) {
-        /* User does not have any exercise log. Creating an empty list of exercise log */
-        val updateItemRequest = UpdateItemRequest {
-          tableName = EXECERCISE_TABLE_NAME
-          key = currentUserKeyInDB
-          attributeUpdates = mutableMapOf(
-            "exercise_log" to AttributeValueUpdate {
-              value = AttributeValue.L(emptyList())
-              action = AttributeAction.Put
-            }
-          )
-        }
-        ddb.updateItem(updateItemRequest)
-      }
-      currentUserExerciseCache = existingExerciseLog
-    }
-  }
-  
-  suspend fun addExercise(newExercise: Exercise) {
-    val newItem = mutableMapOf<String, AttributeValue>()
-    newItem["date"] = AttributeValue.S(newExercise.date)
-    newItem["length"] = AttributeValue.N(newExercise.exerciseLengthInMins.toString())
-    newItem["calories"] = AttributeValue.N(newExercise.calories.toString())
-    val updateItem = mutableMapOf<String, AttributeValue>()
-    updateItem[":newItem"] = AttributeValue.M(newItem)
-    val request = UpdateItemRequest {
-      tableName = EXECERCISE_TABLE_NAME
-      key = currentUserKeyInDB
-      updateExpression = "SET exercise_log = list_append(exercise_log, :newItem)"
-      expressionAttributeValues = updateItem
-    }
-    ddb.updateItem(request)
-    currentUserExerciseCache.add(updateItem)
-  }
-  
-  suspend fun getAllExercises(): MutableList<MutableMap<String, AttributeValue>> {
-    val ddb = DynamoDbClient { region = "ap-east-1" }
-    val getItemRequest = GetItemRequest {
-      tableName = EXECERCISE_TABLE_NAME
+  suspend fun signupUser() {
+    val req = GetItemRequest {
+      tableName = USERDB_NAME
       key = currentUserKeyInDB
     }
-    val existingExerciseLog: MutableList<MutableMap<String, AttributeValue>> = mutableListOf()
     try {
-      val res = ddb.getItem(getItemRequest)
-      val logObtained = res.item?.get("exercise_log")?.asL()
-      logObtained?.forEach { currentList ->
-        val returnMap = currentList.asM()
-        existingExerciseLog.add(returnMap as MutableMap<String, AttributeValue>)
+      val existingUser = ddb.getItem(req)
+      if (existingUser.item != null) throw Exception()
+      val emptyItem = mutableMapOf<String, AttributeValue>()
+      emptyItem["username"] = AttributeValue.S(this.userName)
+      emptyItem["exercise_log"] = AttributeValue.L(emptyList<AttributeValue.M>())
+      emptyItem["food_log"] = AttributeValue.L(emptyList<AttributeValue.M>())
+      val signupRequest = PutItemRequest {
+        tableName = USERDB_NAME
+        item = emptyItem
       }
+      ddb.putItem(signupRequest)
     } catch (_: Exception) {
+      throw Exception("User already exist")
     }
-    return existingExerciseLog
   }
+  
+  suspend fun addEntries(exerciseOrFood: ExerciseOrFood) {
+    try {
+      val updateReq = exerciseOrFood.updateRequest(this)
+      ddb.updateItem(updateReq)
+      if (exerciseOrFood is Exercise) {
+        addCurrentUserExerciseCache(exerciseOrFood)
+      }
+      else if (exerciseOrFood is Food) {
+        addCurrentUserFoodCache(exerciseOrFood)
+      }
+    } catch (e: Exception) {
+      throw e
+    }
+  }
+  
 }
