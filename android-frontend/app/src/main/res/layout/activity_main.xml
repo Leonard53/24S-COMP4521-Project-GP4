@@ -9,7 +9,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:layout_marginTop="30dp">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/shapeableImageView"
@@ -17,11 +18,11 @@
             android:layout_height="50dp"
             android:layout_marginStart="16dp"
             android:scaleType="centerCrop"
+            android:src="@drawable/user"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/CircularShapeAppearance"
-            android:src="@drawable/user" />
+            app:shapeAppearanceOverlay="@style/CircularShapeAppearance" />
 
         <TextView
             android:id="@+id/header_greeting"
@@ -225,7 +226,7 @@
                     android:layout_width="27dp"
                     android:layout_height="21dp"
                     android:layout_marginBottom="4dp"
-                    android:text="Kcal"
+                    android:text="Min"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.36"
@@ -342,11 +343,11 @@
                         android:layout_width="83dp"
                         android:layout_height="78dp"
                         android:layout_marginTop="16dp"
+                        android:src="@drawable/food"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.507"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/food" />
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
@@ -375,11 +376,11 @@
                         android:layout_width="83dp"
                         android:layout_height="78dp"
                         android:layout_marginTop="16dp"
+                        android:src="@drawable/exercise"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.507"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/exercise" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/main_buttonTitle1"
@@ -423,11 +424,11 @@
                         android:layout_width="83dp"
                         android:layout_height="78dp"
                         android:layout_marginTop="16dp"
+                        android:src="@drawable/exercise"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.507"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        android:src="@drawable/exercise" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/main_buttonTitle4"
