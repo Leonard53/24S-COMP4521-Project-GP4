@@ -2,7 +2,7 @@
 agp = "8.3.2"
 dynamodb = "1.2.6"
 kotlin = "1.9.0"
-cognitoidentityprovider = "1.2.6"
+sso = "1.2.9"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -18,7 +18,7 @@ constraintlayout = "2.1.4"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 dynamodb = { group = "aws.sdk.kotlin", name = "dynamodb", version.ref = "dynamodb" }
-cognitoidentityprovider = { group = "aws.sdk.kotlin", name = "cognitoidentityprovider", version.ref = "cognitoidentityprovider" }
+sso = { group = "aws.sdk.kotlin", name = "sso", version.ref = "sso" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

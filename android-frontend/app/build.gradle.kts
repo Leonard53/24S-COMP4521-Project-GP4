@@ -61,7 +61,7 @@ dependencies {
   implementation(libs.androidx.ui.tooling.preview)
   implementation(libs.androidx.material3)
   implementation(libs.dynamodb)
-  implementation(libs.cognitoidentityprovider)
+  implementation(libs.sso)
   implementation(libs.androidx.appcompat)
   implementation(libs.material)
   implementation(libs.androidx.activity)
