@@ -1,4 +1,4 @@
-package com.example.comp4521_project_gp4.ui.fragments
+package com.comp4521_project_gp4.ui.fragments
 
 import androidx.fragment.app.viewModels
 import android.os.Bundle
@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
-import com.example.comp4521_project_gp4.R
-import com.example.comp4521_project_gp4.viewmodel.ExerciseViewModel
+import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.viewmodel.ExerciseViewModel
 
 class ExerciseFragment : Fragment() {
 

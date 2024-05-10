@@ -1,9 +1,9 @@
-package com.example.comp4521_project_gp4.viewmodel
+package com.comp4521_project_gp4.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.comp4521_project_gp4.model.ExerciseModel
+import com.comp4521_project_gp4.model.ExerciseModel
 
 class ExerciseViewModel : ViewModel() {
     // TODO: Implement the ViewModel

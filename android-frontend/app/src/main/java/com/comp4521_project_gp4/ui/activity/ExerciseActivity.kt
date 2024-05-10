@@ -1,4 +1,4 @@
-package com.example.comp4521_project_gp4.ui.activity
+package com.comp4521_project_gp4.ui.activity
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,10 +6,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.activity.viewModels
-import com.example.comp4521_project_gp4.R
-import com.example.comp4521_project_gp4.model.ExerciseModel
-import com.example.comp4521_project_gp4.ui.adapters.ExerciseAdapter
-import com.example.comp4521_project_gp4.viewmodel.ExerciseViewModel
+import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.ui.adapters.ExerciseAdapter
+import com.comp4521_project_gp4.viewmodel.ExerciseViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.button.MaterialButton
 

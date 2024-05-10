@@ -1,4 +1,4 @@
-package com.example.comp4521_project_gp4.model
+package com.comp4521_project_gp4.model
 
 class ExerciseModel {
     data class ExerciseItem(

@@ -1,11 +1,11 @@
-package com.example.comp4521_project_gp4.ui.activity
+package com.comp4521_project_gp4.ui.activity
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.ComponentActivity
 import android.content.Intent
 //import com.example.comp4521_project_gp4.ui.theme.COMP4521ProjectGP4Theme
-import com.example.comp4521_project_gp4.R
+import com.comp4521_project_gp4.R
 import android.graphics.Color
 import android.view.View
 import com.google.android.material.card.MaterialCardView

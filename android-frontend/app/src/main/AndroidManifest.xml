@@ -18,16 +18,16 @@
             android:exported="true">
         </activity>
 
-        <activity android:name=".ui.activity.AddExerciseActivity">
+        <activity android:name="com.comp4521_project_gp4.ui.activity.AddExerciseActivity">
             <!-- Optionally, configure the parent activity and other attributes -->
         </activity>
-        <activity android:name=".ui.activity.ExerciseActivity">
+        <activity android:name="com.comp4521_project_gp4.ui.activity.ExerciseActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activity.MainActivity" />
+                android:value="com.comp4521_project_gp4.ui.activity.MainActivity" />
         </activity>
         <activity
-            android:name=".ui.activity.MainActivity"
+            android:name="com.comp4521_project_gp4.ui.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme">
