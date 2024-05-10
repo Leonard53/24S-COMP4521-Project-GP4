@@ -6,5 +6,4 @@ class ExerciseModel {
         val exerciseDateTime: String,
         val exerciseCalories: Int
     )
-    // Additional functionality for ExerciseModel here
 }
