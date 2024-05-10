@@ -68,7 +68,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/filledButton"
+                android:id="@+id/addExerciseBtn"
                 android:layout_width="368dp"
                 android:layout_height="78dp"
                 android:text="+ Add record"

@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+        <activity android:name=".ui.activity.AddExerciseActivity">
+            <!-- Optionally, configure the parent activity and other attributes -->
+        </activity>
         <activity android:name=".ui.activity.ExerciseActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
