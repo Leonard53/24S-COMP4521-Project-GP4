@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+
+        <activity
+            android:name="com.comp4521_project_gp4.ui.activity.SingIn"
+            android:exported="true">
+        </activity>
+
         <activity android:name=".ui.activity.AddExerciseActivity">
             <!-- Optionally, configure the parent activity and other attributes -->
         </activity>
@@ -27,7 +33,6 @@
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
