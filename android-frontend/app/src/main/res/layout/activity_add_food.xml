@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.AddFood"
+    android:orientation="vertical"
+    android:background="@drawable/foodbkk">
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/addfoodreturn"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Return"
+      android:textAllCaps="false"
+      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+      android:layout_gravity="center"
+      android:layout_marginTop="18dp"
+      android:textStyle="bold"
+      android:textColor="#1087E6"
+      android:fontFamily="sans-serif"/>
+
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/btnAddFood"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="Add +"
+      android:textAllCaps="false"
+      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+      android:layout_gravity="center"
+      android:layout_marginTop="18dp"
+      android:textStyle="bold"
+      android:textColor="#4CAF50"
+      android:fontFamily="sans-serif"/>
+
+  <ListView
+      android:id="@+id/lvFoodRecords"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:divider="@android:color/darker_gray"
+      android:dividerHeight="1dp"
+      android:padding="8dp"
+      android:clipToPadding="false"
+      android:scrollbarStyle="outsideOverlay"
+      android:fontFamily="sans-serif"/>
+
+
+</LinearLayout>

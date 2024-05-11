@@ -6,6 +6,7 @@ import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
 
 abstract class ExerciseOrFood {
+  var uuid = ""
   abstract fun convertToMap(): MutableMap<String, AttributeValue>
   abstract suspend fun updateRequest(user: User): UpdateItemRequest
 }

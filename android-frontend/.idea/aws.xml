@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="accountSettings">
-    <option name="activeProfile" value="profile:PowerUserAccess-767397724589" />
     <option name="activeRegion" value="ap-east-1" />
     <option name="recentlyUsedProfiles">
       <list>
@@ -15,8 +14,5 @@
         <option value="us-east-1" />
       </list>
     </option>
-  </component>
-  <component name="connectionManager">
-    <option name="activeConnectionId" value="sso-session:comp4521" />
   </component>
 </project>

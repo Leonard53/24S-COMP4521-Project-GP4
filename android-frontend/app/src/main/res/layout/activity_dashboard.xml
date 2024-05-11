@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".ui.activity.dashboard"
+    android:background="@drawable/main_wallpaper"
+    >
+
+
+  <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_alignParentTop="true"
+      android:layout_marginTop="135dp"
+      android:gravity="center"
+      android:text="DashBoard"
+      android:textColor="#A12E2E"
+      android:textSize="30sp" />
+
+  <com.github.mikephil.charting.charts.BarChart
+      android:id="@+id/barChartt"
+      android:layout_width="match_parent"
+      android:layout_height="300dp"
+      android:layout_centerInParent="true" />
+
+
+  <com.google.android.material.button.MaterialButton
+      android:id="@+id/dashbtnreturn"
+      style="@style/Widget.MaterialComponents.Button.TextButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:layout_alignParentBottom="true"
+      android:layout_marginBottom="16dp"
+      android:fontFamily="sans-serif"
+      android:text="Return"
+      android:textAllCaps="false"
+      android:textColor="#4CAF50"
+      android:textStyle="bold" />
+
+</RelativeLayout>
