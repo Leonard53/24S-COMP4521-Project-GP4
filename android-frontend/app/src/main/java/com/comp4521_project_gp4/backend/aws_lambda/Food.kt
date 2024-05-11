@@ -1,17 +1,20 @@
 package com.comp4521_project_gp4.backend.aws_lambda
 
+import android.os.Parcelable
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
+import kotlinx.parcelize.Parcelize
 import java.util.UUID
 
+@Parcelize
 data class Food(
   val date: String,
   val foodName: String,
   val foodCalories: UInt
-) : ExerciseOrFood() {
+) : ExerciseOrFood(), Parcelable {
   override fun convertToMap(): MutableMap<String, AttributeValue> {
     val returnMap = mutableMapOf<String, AttributeValue>()
     returnMap["uuid"] = AttributeValue.S(UUID.randomUUID().toString())
@@ -33,18 +36,24 @@ data class Food(
     return req
   }
   
-  suspend fun getAllFood(user: User): MutableList<Food> {
-    val getItemRequest = GetItemRequest {
-      tableName = USERDB_NAME
-      key = user.getCurrentUserKeyInDB()
+  companion object {
+    suspend fun getAllFood(user: User): MutableList<Food> {
+      val getItemRequest = GetItemRequest {
+        tableName = USERDB_NAME
+        key = user.getCurrentUserKeyInDB()
+      }
+      try {
+        val res = ddb.getItem(getItemRequest)
+        val logObtained = res.item?.get("food_log")?.asL() ?: emptyList()
+        return getAllFood(logObtained)
+      } catch (_: Exception) {
+        return emptyList<Food>().toMutableList()
+      }
     }
-    val ddb = DynamoDbClient { region = "ap-east-1" }
-    val foodLogsInDB: MutableList<Food> = mutableListOf()
     
-    try {
-      val res = ddb.getItem(getItemRequest)
-      val logObtained = res.item?.get("food_log")?.asL()
-      logObtained?.forEach { currentList ->
+    suspend fun getAllFood(rawLog: List<AttributeValue>): MutableList<Food> {
+      val returnList = mutableListOf<Food>()
+      rawLog.forEach { currentList ->
         val returnMap = currentList.asM()
         val uuid = returnMap["uuid"]?.asS() ?: ""
         val date = returnMap["date"]?.asS() ?: ""
@@ -52,10 +61,9 @@ data class Food(
         val calories = returnMap["calories"]?.asN()?.toUInt() ?: 0u
         val newFood = Food(date, name, calories)
         newFood.uuid = uuid
-        foodLogsInDB.add(newFood)
+        returnList.add(newFood)
       }
-    } catch (_: Exception) {
+      return returnList
     }
-    return foodLogsInDB
   }
 }

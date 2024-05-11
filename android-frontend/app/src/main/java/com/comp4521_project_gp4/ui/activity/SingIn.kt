@@ -1,9 +1,11 @@
 package com.comp4521_project_gp4.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -16,13 +18,13 @@ class SingIn : AppCompatActivity() {
   private fun checkUsernameAndPasswordFilledIn(): Boolean {
     val errorText = findViewById<TextView>(R.id.signin_error_text)
     val userNameInput = findViewById<EditText>(R.id.username_text).text
-    if (userNameInput == null) {
+    if (userNameInput.isNullOrEmpty()) {
       "Please enter your username!".also { errorText.text = it }
       errorText.visibility = View.VISIBLE
       return false
     }
     val passWordInput = findViewById<EditText>(R.id.password_text).text
-    if (passWordInput == null) {
+    if (passWordInput.isNullOrEmpty()) {
       "Please enter your password!".also { errorText.text = it }
       errorText.visibility = View.VISIBLE
       return false
@@ -31,23 +33,78 @@ class SingIn : AppCompatActivity() {
     return true
   }
   
-  private suspend fun signUpUser(): User? {
+  private fun hideSignInSignUpBtn() {
+    val signInBut = findViewById<Button>(R.id.signin_btn)
+    val signUpBut = findViewById<Button>(R.id.signup_btn)
+    val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+    signUpBut.visibility = View.GONE
+    signUpBut.isEnabled = false
+    signInBut.visibility = View.GONE
+    signInBut.isEnabled = false
+    progressBar.visibility = View.VISIBLE
+    progressBar.isEnabled = true
+  }
+  
+  private fun showSignInSignUpBtn() {
+    val signInBut = findViewById<Button>(R.id.signin_btn)
+    val signUpBut = findViewById<Button>(R.id.signup_btn)
+    val progressBar = findViewById<ProgressBar>(R.id.progressBar)
+    signUpBut.visibility = View.VISIBLE
+    signUpBut.isEnabled = true
+    signInBut.visibility = View.VISIBLE
+    signInBut.isEnabled = true
+    progressBar.visibility = View.GONE
+    progressBar.isEnabled = false
+  }
+  
+  private fun preSubmitCheck(): User? {
+    hideSignInSignUpBtn()
     val filledIn = checkUsernameAndPasswordFilledIn()
     if (filledIn) {
       val userName = findViewById<EditText>(R.id.username_text).text.toString()
       val currentUser = User(userName)
-      try {
-        currentUser.signupUser()
-      } catch (e: Exception) {
-        val errorText = findViewById<TextView>(R.id.signin_error_text)
-        e.toString().also {
-          errorText.text = it
-        }
-        errorText.visibility = View.VISIBLE
-      }
       return currentUser
     }
     return null
+  }
+  
+  private fun signInOrSignUpExceptionHandler(e: Exception) {
+    val errorText = findViewById<TextView>(R.id.signin_error_text)
+    e.toString().also {
+      errorText.text = it
+    }
+    errorText.visibility = View.VISIBLE
+    showSignInSignUpBtn()
+  }
+  
+  private suspend fun signUpUser(): User? {
+    val currentUser = preSubmitCheck() ?: return null
+    try {
+      currentUser.signupUser()
+    } catch (e: Exception) {
+      signInOrSignUpExceptionHandler(e)
+      return null
+    }
+    startActivity(mainActivityIntent(currentUser))
+    return currentUser
+  }
+  
+  private suspend fun signInUser(): User? {
+    val currentUser = preSubmitCheck() ?: return null
+    try {
+      currentUser.signinUser()
+    } catch (e: Exception) {
+      signInOrSignUpExceptionHandler(e)
+      return null
+    }
+    startActivity(mainActivityIntent(currentUser))
+    return currentUser
+  }
+  
+  private fun mainActivityIntent(loggedInUser: User): Intent {
+    val intent = Intent(this, MainActivity::class.java)
+    intent.putExtra("user", loggedInUser)
+    return intent
   }
   
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +116,10 @@ class SingIn : AppCompatActivity() {
       lifecycleScope.launch {
         signUpUser()
       }
+    }
+    val signInButton = findViewById<Button>(R.id.signin_btn)
+    signInButton.setOnClickListener {
+      lifecycleScope.launch { signInUser() }
     }
   }
 }

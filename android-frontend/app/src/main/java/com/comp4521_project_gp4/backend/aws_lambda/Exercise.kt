@@ -1,18 +1,21 @@
 package com.comp4521_project_gp4.backend.aws_lambda
 
+import android.os.Parcelable
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
 import aws.smithy.kotlin.runtime.util.toNumber
+import kotlinx.parcelize.Parcelize
 import java.util.UUID.randomUUID
 
+@Parcelize
 data class Exercise(
   val date: String,
   val exerciseName: String,
   val exerciseLengthInMins: UInt,
   val calories: UInt
-) : ExerciseOrFood() {
+) : ExerciseOrFood(), Parcelable {
   override fun convertToMap(): MutableMap<String, AttributeValue> {
     val returnMap = mutableMapOf<String, AttributeValue>()
     returnMap["uuid"] = AttributeValue.S(randomUUID().toString())
@@ -35,17 +38,24 @@ data class Exercise(
     return req
   }
   
-  suspend fun getAllExercises(user: User): MutableList<Exercise> {
-    val getItemRequest = GetItemRequest {
-      tableName = USERDB_NAME
-      key = user.getCurrentUserKeyInDB()
+  companion object {
+    suspend fun getAllExercises(user: User): MutableList<Exercise> {
+      val getItemRequest = GetItemRequest {
+        tableName = USERDB_NAME
+        key = user.getCurrentUserKeyInDB()
+      }
+      try {
+        val res = ddb.getItem(getItemRequest)
+        val logObtained = res.item?.get("exercise_log")?.asL() ?: emptyList()
+        return getAllExercises(logObtained)
+      } catch (_: Exception) {
+        return emptyList<Exercise>().toMutableList()
+      }
     }
-    val ddb = DynamoDbClient { region = "ap-east-1" }
-    val exerciseLogsInDB: MutableList<Exercise> = mutableListOf()
-    try {
-      val res = ddb.getItem(getItemRequest)
-      val logObtained = res.item?.get("exercise_log")?.asL()
-      logObtained?.forEach { currentList ->
+    
+    fun getAllExercises(rawLog: List<AttributeValue>): MutableList<Exercise> {
+      val returnList = mutableListOf<Exercise>()
+      rawLog.forEach { currentList ->
         val returnMap = currentList.asM()
         val uuid = returnMap["uuid"]?.asS() ?: ""
         val date = returnMap["date"]?.asS() ?: ""
@@ -54,10 +64,9 @@ data class Exercise(
         val calories = returnMap["calories"]?.asN()?.toUInt() ?: 0u
         val newExercise = Exercise(date, name, length, calories)
         newExercise.uuid = uuid
-        exerciseLogsInDB.add(newExercise)
+        returnList.add(newExercise)
       }
-    } catch (_: Exception) {
+      return returnList
     }
-    return exerciseLogsInDB
   }
 }
