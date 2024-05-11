@@ -20,9 +20,7 @@ class ExerciseAdapter(private var cardItemList: List<ExerciseModel.ExerciseItem>
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.exercise_card, parent, false)
         return CardViewHolder(itemView)
     }
-
-
-
+  
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val currentItem = cardItemList[position]
         holder.exerciseType.text = currentItem.exerciseType
@@ -36,5 +34,4 @@ class ExerciseAdapter(private var cardItemList: List<ExerciseModel.ExerciseItem>
     }
 
     override fun getItemCount() = cardItemList.size
-
 }

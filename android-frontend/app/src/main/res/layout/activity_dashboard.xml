@@ -1,43 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ui.activity.dashboard"
-    android:background="@drawable/main_wallpaper"
-    >
+    tools:context=".ui.activity.DashboardActivity">
+
+  <FrameLayout
+      android:id="@+id/toolbar_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="parent">
+  </FrameLayout>
+
+
+
+  <androidx.cardview.widget.CardView
+      android:id="@+id/dashboardCard"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_margin="8dp"
+      app:cardCornerRadius="8dp"
+      app:cardElevation="4dp"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_container">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+      <TextView
+          android:id="@+id/dashboard_title"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Overview"
+          android:textColor="@color/material_dynamic_neutral_variant30"
+          android:textSize="15dp"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <com.github.mikephil.charting.charts.BarChart
+          android:id="@+id/barChartt"
+          android:layout_width="match_parent"
+          android:layout_height="250dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/dashboard_title"
+          app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.cardview.widget.CardView>
+
+
 
 
   <TextView
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentTop="true"
-      android:layout_marginTop="135dp"
-      android:gravity="center"
-      android:text="DashBoard"
-      android:textColor="#A12E2E"
-      android:textSize="30sp" />
-
-  <com.github.mikephil.charting.charts.BarChart
-      android:id="@+id/barChartt"
-      android:layout_width="match_parent"
-      android:layout_height="300dp"
-      android:layout_centerInParent="true" />
-
-
-  <com.google.android.material.button.MaterialButton
-      android:id="@+id/dashbtnreturn"
-      style="@style/Widget.MaterialComponents.Button.TextButton"
+      android:id="@+id/leaderboard_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_centerHorizontal="true"
-      android:layout_alignParentBottom="true"
-      android:layout_marginBottom="16dp"
-      android:fontFamily="sans-serif"
-      android:text="Return"
-      android:textAllCaps="false"
-      android:textColor="#4CAF50"
-      android:textStyle="bold" />
+      android:layout_marginTop="12dp"
+      android:text="Leaderboard"
+      android:textColor="@color/material_dynamic_neutral_variant30"
+      android:textSize="20dp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.0"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/dashboardCard" />
 
-</RelativeLayout>
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/dashboard_recyclerview"
+      android:layout_width="match_parent"
+      android:layout_height="405dp"
+      android:layout_marginTop="12dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.555"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/leaderboard_title"
+      app:shapeAppearanceOverlay="@style/MainPageButtonCardAppearance" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
