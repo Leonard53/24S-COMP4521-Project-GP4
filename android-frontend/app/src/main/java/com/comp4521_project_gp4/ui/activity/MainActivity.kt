@@ -12,9 +12,9 @@ import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.card.MaterialCardView
 import com.comp4521_project_gp4.R
 
-
 class MainActivity : AppCompatActivity() {
   private lateinit var menuButton: ImageView
+  private lateinit var currentUser: User
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -30,12 +30,13 @@ class MainActivity : AppCompatActivity() {
     setContentView(R.layout.activity_main)
     
     val loggedInUser = intent.getParcelableExtra<User>("user")
+    currentUser = loggedInUser!!
     val calories_burned = findViewById<TextView>(R.id.info1_value);
     val calories_intake = findViewById<TextView>(R.id.info2_value);
     val exercise_time = findViewById<TextView>(R.id.info3_value);
+    val exercise_btn: MaterialCardView = findViewById(R.id.main_exercise_btn);
     val nutrition_btn: MaterialCardView = findViewById(R.id.main_nutrition_btn);
     val leadboard_btn: MaterialCardView = findViewById(R.id.main_leaderboard_btn);
-    val exercise_btn: MaterialCardView = findViewById(R.id.main_exercise_btn);
     
     val friends_btn: MaterialCardView = findViewById(R.id.main_friend_btn)
     calories_burned.text = "1020";
@@ -57,6 +58,7 @@ class MainActivity : AppCompatActivity() {
     nutrition_btn.setOnClickListener {
       // Create an Intent to start the AddFood Activity
       val intent = Intent(this, AddFood::class.java)
+      intent.putExtra("user", currentUser)
       startActivity(intent)
     }
     
@@ -68,6 +70,12 @@ class MainActivity : AppCompatActivity() {
     
     friends_btn.setOnClickListener {
       startActivity(Intent(this, FriendsActivity::class.java))
+    }
+    
+    leadboard_btn.setOnClickListener {
+      // Create an Intent to start the AddFood Activity
+      val intent = Intent(this, dashboard::class.java)
+      startActivity(intent)
     }
   }
   
