@@ -30,7 +30,7 @@ data class Food(
     val req = UpdateItemRequest {
       tableName = USERDB_NAME
       key = user.getCurrentUserKeyInDB()
-      updateExpression = "SET exercise_log = list_append(exercise_log, :newItem)"
+      updateExpression = "SET food_log = list_append(food_log, :newItem)"
       expressionAttributeValues = updateItem
     }
     return req
