@@ -1,5 +1,6 @@
 package com.comp4521_project_gp4.ui.activity
 
+import MainViewModel
 import android.os.Bundle
 import android.widget.TextView
 import android.content.Intent
@@ -7,6 +8,7 @@ import android.graphics.Color
 import android.view.View
 import com.comp4521_project_gp4.backend.aws.User
 import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import com.google.android.material.card.MaterialCardView
@@ -15,6 +17,7 @@ import com.comp4521_project_gp4.R
 class MainActivity : AppCompatActivity() {
   private lateinit var menuButton: ImageView
   private lateinit var currentUser: User
+  private val mainViewModel: MainViewModel by viewModels()
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -31,20 +34,39 @@ class MainActivity : AppCompatActivity() {
     
     val loggedInUser = intent.getParcelableExtra<User>("user")
     currentUser = loggedInUser!!
+
+    loggedInUser?.let {
+      mainViewModel.setUser(it)
+    } ?: run {
+      // Handle case where no User object was passed in Intent
+      // Perhaps close the activity or show an error
+    }
+    
+    val user_name = findViewById<TextView>(R.id.user_name);
     val calories_burned = findViewById<TextView>(R.id.info1_value);
     val calories_intake = findViewById<TextView>(R.id.info2_value);
     val exercise_time = findViewById<TextView>(R.id.info3_value);
     val exercise_btn: MaterialCardView = findViewById(R.id.main_exercise_btn);
     val nutrition_btn: MaterialCardView = findViewById(R.id.main_nutrition_btn);
     val leadboard_btn: MaterialCardView = findViewById(R.id.main_leaderboard_btn);
-    
     val friends_btn: MaterialCardView = findViewById(R.id.main_friend_btn)
-    calories_burned.text = "1020";
-    calories_intake.text = "1100";
-    exercise_time.text = "162";
+    
+    user_name.text = currentUser.getUsername();
+    
+    // Observe ViewModel
+    mainViewModel.caloriesBurned.observe(this) { burnedCalories ->
+      calories_burned.text = burnedCalories.toString()
+    }
+    
+    mainViewModel.caloriesIntake.observe(this) { intakeCalories ->
+      calories_intake.text = intakeCalories.toString()
+    }
+    
+    mainViewModel.exerciseTime.observe(this) { timeInMinutes ->
+      exercise_time.text = timeInMinutes.toString()
+    }
     
     menuButton = findViewById<ImageView>(R.id.menuButton)
-    
     menuButton.setOnClickListener {
       showPopupMenu(it)
     }
@@ -77,6 +99,8 @@ class MainActivity : AppCompatActivity() {
       val intent = Intent(this, DashboardActivity::class.java)
       startActivity(intent)
     }
+    
+    mainViewModel.mainScreenOnLoad()
   }
   
   private fun showPopupMenu(view: View) {
