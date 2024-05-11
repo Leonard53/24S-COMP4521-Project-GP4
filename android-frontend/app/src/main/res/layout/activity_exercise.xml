@@ -6,25 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/topAppBar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFFFFF"
-            android:minHeight="?attr/actionBarSize"
-            android:title="Your Activity Title"
-            app:navigationIcon="@drawable/arrow_back"/>
-
-    </com.google.android.material.appbar.AppBarLayout>
+  <!-- Toolbar Container -->
+  <FrameLayout
+      android:id="@+id/toolbar_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="parent">
+    <!-- This FrameLayout will hold the ToolbarFragment -->
+  </FrameLayout>
 
     <TextView
         android:id="@+id/main_cardTitle1"
@@ -38,7 +27,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.056"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_container" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercise_recyclerView"
@@ -73,7 +62,7 @@
                 android:layout_height="78dp"
                 android:text="+ Add record"
                 app:cornerRadius="15dp"
-                app:backgroundTint="@color/add_exercise_button"
+                app:backgroundTint="@color/button_primary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
