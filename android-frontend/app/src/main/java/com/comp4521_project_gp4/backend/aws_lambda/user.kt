@@ -1,5 +1,6 @@
 package com.comp4521_project_gp4.backend.aws_lambda
 
+import aws.sdk.kotlin.runtime.auth.credentials.StaticCredentialsProvider
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
@@ -34,7 +35,13 @@ class User(private val userName: String) {
     return currentUserFoodCache
   }
   
-  private val ddb = DynamoDbClient { region = "ap-east-1" }
+  private val ddb = DynamoDbClient {
+    region = "ap-east-1"
+    credentialsProvider = StaticCredentialsProvider {
+      accessKeyId = "AKIA3FLDYAGWZKNIXX57"
+      secretAccessKey = "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"
+    }
+  }
   
   suspend fun signupUser() {
     val req = GetItemRequest {
@@ -64,8 +71,7 @@ class User(private val userName: String) {
       ddb.updateItem(updateReq)
       if (exerciseOrFood is Exercise) {
         addCurrentUserExerciseCache(exerciseOrFood)
-      }
-      else if (exerciseOrFood is Food) {
+      } else if (exerciseOrFood is Food) {
         addCurrentUserFoodCache(exerciseOrFood)
       }
     } catch (e: Exception) {
