@@ -143,7 +143,7 @@ class User(
     updateItem[":newFriend"] = AttributeValue.L(listOf(AttributeValue.S(friend.getUsername())))
     val req = UpdateItemRequest {
       tableName = USERDB_NAME
-      key = friend.getCurrentUserKeyInDB()
+      key = currentUserKeyInDB
       updateExpression = "SET friend_list = list_append(friend_list, :newFriend)"
       expressionAttributeValues = updateItem
     }
