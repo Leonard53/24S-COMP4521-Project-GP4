@@ -1,9 +1,6 @@
 package com.comp4521_project_gp4.ui.activity
 
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -11,8 +8,8 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import com.comp4521_project_gp4.R
-import com.comp4521_project_gp4.backend.aws_lambda.Food
-import com.comp4521_project_gp4.backend.aws_lambda.User
+import com.comp4521_project_gp4.backend.aws.Food
+import com.comp4521_project_gp4.backend.aws.User
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date

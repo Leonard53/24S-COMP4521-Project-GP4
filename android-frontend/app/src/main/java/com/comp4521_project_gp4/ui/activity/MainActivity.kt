@@ -5,7 +5,7 @@ import android.widget.TextView
 import android.content.Intent
 import android.graphics.Color
 import android.view.View
-import com.comp4521_project_gp4.backend.aws_lambda.User
+import com.comp4521_project_gp4.backend.aws.User
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu

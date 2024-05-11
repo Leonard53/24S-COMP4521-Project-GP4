@@ -13,7 +13,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.comp4521_project_gp4.R
-import com.comp4521_project_gp4.backend.aws_lambda.User
+import com.comp4521_project_gp4.backend.aws.User
 import kotlinx.coroutines.launch
 
 class SingIn : AppCompatActivity() {

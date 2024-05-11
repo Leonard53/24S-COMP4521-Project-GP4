@@ -1,4 +1,4 @@
-package com.comp4521_project_gp4.backend.aws_lambda
+package com.comp4521_project_gp4.backend.aws
 
 import android.os.Parcelable
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue

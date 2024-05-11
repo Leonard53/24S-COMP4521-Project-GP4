@@ -1,7 +1,6 @@
-package com.comp4521_project_gp4.backend.aws_lambda
+package com.comp4521_project_gp4.backend.aws
 
 import android.os.Parcelable
-import androidx.versionedparcelable.ParcelField
 import aws.sdk.kotlin.runtime.auth.credentials.StaticCredentialsProvider
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.AttributeAction
@@ -10,11 +9,8 @@ import aws.sdk.kotlin.services.dynamodb.model.AttributeValueUpdate
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
-import aws.smithy.kotlin.runtime.collections.push
-import aws.smithy.kotlin.runtime.util.type
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
 import kotlin.Exception
 
 const val USERDB_NAME = "COMP4521-user-db"
