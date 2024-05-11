@@ -1,13 +1,17 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.comp4521_project_gp4.backend.aws.User
 import java.time.Duration
+import com.comp4521_project_gp4.backend.aws.Exercise
+import com.comp4521_project_gp4.backend.aws.Food
+import com.comp4521_project_gp4.backend.aws.User
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.temporal.WeekFields
 import java.util.Locale
+import java.util.function.Consumer
+
 
 class MainViewModel : ViewModel() {
   private lateinit var currentUser: User
@@ -26,18 +30,19 @@ class MainViewModel : ViewModel() {
   }
   
   fun updateCaloriesBurned(calories: Int) {
-    _caloriesBurned.value = calories
+    _caloriesBurned.postValue(calories)
   }
   
   fun updateCaloriesIntake(calories: Int) {
-    _caloriesIntake.value = calories
+    _caloriesIntake.postValue(calories)
   }
   
   fun updateExerciseTime(time: Int) {
-    _exerciseTime.value = time
+    _exerciseTime.postValue(time)
   }
   
   fun mainScreenOnLoad() {
+    println("main screen on load")
     var weeklyCaloriesBurned = 0
     var weeklyExerciseTime = 0
     var weeklyCaloriesIntake = 0
@@ -46,23 +51,52 @@ class MainViewModel : ViewModel() {
     val currentWeek = today.get(weekFields.weekOfWeekBasedYear())
     
     
-//    currentUser.getCurrentUserExerciseCache().forEach { exercise ->
-//      val exerciseDate = LocalDate.parse(exercise.date, DateTimeFormatter.ISO_DATE)
-//      if (exerciseDate.get(weekFields.weekOfWeekBasedYear()) == currentWeek) {
-//        weeklyCaloriesBurned += exercise.calories.toInt()
-//        weeklyExerciseTime += exercise.exerciseLengthInMins.toInt()
-//      }
-//    }
-//
-//    currentUser.getCurrentUserFoodCache().forEach { food ->
-//      val foodDate = LocalDate.parse(food.date, DateTimeFormatter.ISO_DATE)
-//      if (foodDate.get(weekFields.weekOfWeekBasedYear()) == currentWeek) {
-//        weeklyCaloriesIntake += food.foodCalories.toInt()
-//      }
-//    }
-//
-//    updateCaloriesBurned(weeklyCaloriesBurned)
-//    updateExerciseTime(weeklyExerciseTime)
-//    updateCaloriesIntake(weeklyCaloriesIntake)
+    currentUser.getCurrentUserExerciseCache().forEach(Consumer { exercise: Exercise ->
+      // Define the formatter for the date pattern "May 11, 2024"
+      val formatter =
+        DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
+      
+      // Parse the date using the formatter
+      val exerciseDate = LocalDate.parse(exercise.date, formatter)
+      
+      // Assuming you have a WeekFields instance for your locale
+      val weekFields =
+        WeekFields.of(Locale.getDefault())
+      
+      // Check if the week of the year matches the current week
+      if (exerciseDate[weekFields.weekOfWeekBasedYear()] == currentWeek) {
+        weeklyCaloriesBurned += exercise.calories.toInt()
+        weeklyExerciseTime += exercise.exerciseLengthInMins.toInt()
+      }
+    })
+    
+    currentUser.getCurrentUserFoodCache().forEach(Consumer { food: Food ->
+      // Creating a formatter that can handle date and time
+      val formatter =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+      
+      // Parse the LocalDateTime from the string
+      val foodDateTime = LocalDateTime.parse(food.date, formatter)
+      
+      // Convert LocalDateTime to LocalDate
+      val foodDate = foodDateTime.toLocalDate()
+      
+      // Assuming you have a WeekFields instance for your locale
+      val weekFields =
+        WeekFields.of(Locale.getDefault())
+      
+      // Check if the week of the year matches the current week
+      if (foodDate[weekFields.weekOfWeekBasedYear()] == currentWeek) {
+        weeklyCaloriesIntake += food.foodCalories.toInt()
+      }
+    })
+    
+    println("update value")
+
+    updateCaloriesBurned(weeklyCaloriesBurned)
+    updateExerciseTime(weeklyExerciseTime)
+    updateCaloriesIntake(weeklyCaloriesIntake)
+    
+    println(caloriesIntake.value)
   }
 }
