@@ -25,7 +25,6 @@ class AddFood : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     user = intent.getParcelableExtra<User>("user")!!
-    println(user.getUsername())
     setContentView(R.layout.activity_add_food)
     sharedPrefs = getSharedPreferences("FoodPrefs", Context.MODE_PRIVATE)
     sharedPrefs.edit().clear().apply()

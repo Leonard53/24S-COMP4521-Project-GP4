@@ -55,7 +55,6 @@ class User(
   }
   
   fun addCurrentUserFoodCache(food: Food) {
-    println("ADDING: ${food.foodName}")
     currentUserFoodCache.add(food)
   }
   
