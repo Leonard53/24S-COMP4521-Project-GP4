@@ -5,6 +5,7 @@ import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
 import aws.smithy.kotlin.runtime.util.toNumber
+import java.util.UUID.randomUUID
 
 data class Exercise(
   val date: String,
@@ -14,6 +15,7 @@ data class Exercise(
 ) : ExerciseOrFood() {
   override fun convertToMap(): MutableMap<String, AttributeValue> {
     val returnMap = mutableMapOf<String, AttributeValue>()
+    returnMap["uuid"] = AttributeValue.S(randomUUID().toString())
     returnMap["date"] = AttributeValue.S(date)
     returnMap["name"] = AttributeValue.S(exerciseName)
     returnMap["length"] = AttributeValue.N(exerciseLengthInMins.toString())
@@ -45,11 +47,13 @@ data class Exercise(
       val logObtained = res.item?.get("exercise_log")?.asL()
       logObtained?.forEach { currentList ->
         val returnMap = currentList.asM()
+        val uuid = returnMap["uuid"]?.asS() ?: ""
         val date = returnMap["date"]?.asS() ?: ""
         val name = returnMap["name"]?.asS() ?: ""
         val length = returnMap["length"]?.asN()?.toUInt() ?: 0u
         val calories = returnMap["calories"]?.asN()?.toUInt() ?: 0u
         val newExercise = Exercise(date, name, length, calories)
+        newExercise.uuid = uuid
         exerciseLogsInDB.add(newExercise)
       }
     } catch (_: Exception) {

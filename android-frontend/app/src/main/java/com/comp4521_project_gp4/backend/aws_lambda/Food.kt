@@ -5,6 +5,7 @@ import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
+import java.util.UUID
 
 data class Food(
   val date: String,
@@ -13,6 +14,7 @@ data class Food(
 ) : ExerciseOrFood() {
   override fun convertToMap(): MutableMap<String, AttributeValue> {
     val returnMap = mutableMapOf<String, AttributeValue>()
+    returnMap["uuid"] = AttributeValue.S(UUID.randomUUID().toString())
     returnMap["date"] = AttributeValue.S(date)
     returnMap["name"] = AttributeValue.S(foodName)
     returnMap["calories"] = AttributeValue.N(foodCalories.toString())
@@ -44,11 +46,13 @@ data class Food(
       val logObtained = res.item?.get("food_log")?.asL()
       logObtained?.forEach { currentList ->
         val returnMap = currentList.asM()
+        val uuid = returnMap["uuid"]?.asS() ?: ""
         val date = returnMap["date"]?.asS() ?: ""
         val name = returnMap["name"]?.asS() ?: ""
         val calories = returnMap["calories"]?.asN()?.toUInt() ?: 0u
-        val newExercise = Food(date, name, calories)
-        foodLogsInDB.add(newExercise)
+        val newFood = Food(date, name, calories)
+        newFood.uuid = uuid
+        foodLogsInDB.add(newFood)
       }
     } catch (_: Exception) {
     }
