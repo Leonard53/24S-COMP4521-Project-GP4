@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
     setContentView(R.layout.activity_main)
     val loggedInUser = intent.getParcelableExtra<User>("user")
+    println(loggedInUser?.getUsername())
     val calories_burned = findViewById<TextView>(R.id.info1_value)
     val calories_intake = findViewById<TextView>(R.id.info2_value)
     val exercise_time = findViewById<TextView>(R.id.info3_value)

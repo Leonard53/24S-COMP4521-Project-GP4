@@ -21,9 +21,11 @@ class AddFood : AppCompatActivity() {
   private lateinit var user: User
   override fun onCreate(savedInstanceState: Bundle?) {
     
-    user = intent.getParcelableExtra<User>("user")!!
+    
     
     super.onCreate(savedInstanceState)
+    user = intent.getParcelableExtra<User>("user")?:User("idk")
+    println(user.getUsername())
     setContentView(R.layout.activity_add_food)
     sharedPrefs = getSharedPreferences("FoodPrefs", Context.MODE_PRIVATE)
     sharedPrefs.edit().clear().apply()
@@ -48,7 +50,7 @@ class AddFood : AppCompatActivity() {
       startActivity(intent)
       
     }
-    
+    foodList.clear()// 清除舊數據
     loadFoodRecords()
     listView.adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, foodList)
     
@@ -56,13 +58,15 @@ class AddFood : AppCompatActivity() {
   
   
   private fun loadFoodRecords() {
-    val count = sharedPrefs.getInt("count", 0)
-    foodList.clear()// 清除舊數據
-    for (i in 1..count) {
-      sharedPrefs.getString("foodRecord_$i", null)?.let {
-        foodList.add(it)
-      }
+    //val count = sharedPrefs.getInt("count", 0)
+    val AllFood = user.getCurrentUserFoodCache()
+    
+    AllFood.forEach { currentFood ->
+      val record =
+        "Food Name: $currentFood.foodName\nCalories: ${currentFood.foodCalories.toString()} kcal\nEating Time: ${currentFood.date.toString()}"
+      foodList.add(record)
     }
+    
   }
   
 }
