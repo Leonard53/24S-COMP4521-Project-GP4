@@ -1,11 +1,9 @@
 package com.comp4521_project_gp4.backend.aws_lambda
 
 import android.os.Parcelable
-import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
-import aws.smithy.kotlin.runtime.util.toNumber
 import kotlinx.parcelize.Parcelize
 import java.util.UUID.randomUUID
 
@@ -14,6 +12,10 @@ data class Exercise(
   val date: String,
   val exerciseName: String,
   val exerciseLengthInMins: UInt,
+  val exerciseStartTime: String,
+  val exerciseEndTime: String,
+  val latitude: Double,
+  val longitude: Double,
   val calories: UInt
 ) : ExerciseOrFood(), Parcelable {
   override fun convertToMap(): MutableMap<String, AttributeValue> {
@@ -21,6 +23,10 @@ data class Exercise(
     returnMap["uuid"] = AttributeValue.S(randomUUID().toString())
     returnMap["date"] = AttributeValue.S(date)
     returnMap["name"] = AttributeValue.S(exerciseName)
+    returnMap["exerciseStartTime"] = AttributeValue.S(exerciseStartTime)
+    returnMap["exerciseEndTime"] = AttributeValue.S(exerciseEndTime)
+    returnMap["latitude"] = AttributeValue.N(latitude.toString())
+    returnMap["longitude"] = AttributeValue.N(longitude.toString())
     returnMap["length"] = AttributeValue.N(exerciseLengthInMins.toString())
     returnMap["calories"] = AttributeValue.N(calories.toString())
     return returnMap
@@ -60,9 +66,22 @@ data class Exercise(
         val uuid = returnMap["uuid"]?.asS() ?: ""
         val date = returnMap["date"]?.asS() ?: ""
         val name = returnMap["name"]?.asS() ?: ""
+        val exerciseStartTime = returnMap["exerciseStartTime"]?.asS() ?: ""
+        val exerciseEndTime = returnMap["exerciseEndTime"]?.asS() ?: ""
+        val latitude = returnMap["latitude"]?.asN()?.toDouble() ?: 0.0
+        val longitude = returnMap["longitude"]?.asN()?.toDouble() ?: 0.0
         val length = returnMap["length"]?.asN()?.toUInt() ?: 0u
         val calories = returnMap["calories"]?.asN()?.toUInt() ?: 0u
-        val newExercise = Exercise(date, name, length, calories)
+        val newExercise = Exercise(
+          date,
+          name,
+          length,
+          exerciseStartTime,
+          exerciseEndTime,
+          latitude,
+          longitude,
+          calories
+        )
         newExercise.uuid = uuid
         returnList.add(newExercise)
       }
