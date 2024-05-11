@@ -24,12 +24,14 @@ class SingIn : AppCompatActivity() {
     if (userNameInput.isNullOrEmpty()) {
       "Please enter your username!".also { errorText.text = it }
       errorText.visibility = View.VISIBLE
+      showSignInSignUpBtn()
       return false
     }
     val passWordInput = findViewById<EditText>(R.id.password_text).text
     if (passWordInput.isNullOrEmpty()) {
       "Please enter your password!".also { errorText.text = it }
       errorText.visibility = View.VISIBLE
+      showSignInSignUpBtn()
       return false
     }
     errorText.visibility = View.GONE
