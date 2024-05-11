@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ListView
+import android.widget.TextView
 import com.comp4521_project_gp4.R
 
 class AddFood : AppCompatActivity() {
@@ -29,6 +30,13 @@ class AddFood : AppCompatActivity() {
     
     listView = findViewById(R.id.lvFoodRecords)
     btnAddFood = findViewById(R.id.btnAddFood)
+    
+    val addfoodreturn_btn = findViewById<TextView>(R.id.addfoodreturn);
+    addfoodreturn_btn.setOnClickListener {
+      // Create an Intent to start the AddFood Activity
+      val intent = Intent(this, MainActivity::class.java)
+      startActivity(intent)
+    }
     
     btnAddFood.setOnClickListener {
       val intent = Intent(this, RecordFoodPage::class.java).also {
