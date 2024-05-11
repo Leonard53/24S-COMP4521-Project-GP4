@@ -30,6 +30,8 @@ class MainActivity : ComponentActivity() {
         val exercise_time = findViewById<TextView>(R.id.info3_value);
 
         val exercise_btn: MaterialCardView = findViewById(R.id.main_exercise_btn);
+        val nutrition_btn: MaterialCardView = findViewById(R.id.main_nutrition_btn);
+        val leadboard_btn: MaterialCardView = findViewById(R.id.main_leaderboard_btn);
 
         calories_burned.text = "1020";
         calories_intake.text = "1100";
@@ -40,5 +42,18 @@ class MainActivity : ComponentActivity() {
             val intent = Intent(this, ExerciseActivity::class.java)
             startActivity(intent)
         }
+      
+        nutrition_btn.setOnClickListener {
+              // Create an Intent to start the AddFood Activity
+              val intent = Intent(this, AddFood::class.java)
+              startActivity(intent)
+        }
+      
+        leadboard_btn.setOnClickListener {
+              // Create an Intent to start the AddFood Activity
+              val intent = Intent(this, dashboard::class.java)
+              startActivity(intent)
+        }
+      
     }
 }
