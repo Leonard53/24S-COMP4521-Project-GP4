@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.comp4521_project_gp4.R
-import com.comp4521_project_gp4.backend.aws_lambda.Exercise
-import com.comp4521_project_gp4.backend.aws_lambda.User
+import com.comp4521_project_gp4.backend.aws.Exercise
+import com.comp4521_project_gp4.backend.aws.User
 import com.google.android.gms.maps.model.LatLng
 
 class AddExerciseViewModel(application: Application) : AndroidViewModel(application) {

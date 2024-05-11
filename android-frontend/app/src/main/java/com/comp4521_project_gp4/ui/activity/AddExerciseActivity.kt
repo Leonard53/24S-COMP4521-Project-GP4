@@ -17,7 +17,7 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.comp4521_project_gp4.R
-import com.comp4521_project_gp4.backend.aws_lambda.User
+import com.comp4521_project_gp4.backend.aws.User
 import com.comp4521_project_gp4.ui.viewmodel.AddExerciseViewModel
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

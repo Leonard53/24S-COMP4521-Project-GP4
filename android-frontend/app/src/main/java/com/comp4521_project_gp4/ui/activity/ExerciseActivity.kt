@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.activity.viewModels
 import com.comp4521_project_gp4.R
-import com.comp4521_project_gp4.backend.aws_lambda.User
+import com.comp4521_project_gp4.backend.aws.User
 import com.comp4521_project_gp4.ui.adapters.ExerciseAdapter
 import com.comp4521_project_gp4.viewmodel.ExerciseViewModel
 import com.google.android.material.appbar.MaterialToolbar
