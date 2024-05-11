@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
     exercise_btn.setOnClickListener {
       // Create an Intent to start the Exercise Activity
       val intent = Intent(this, ExerciseActivity::class.java)
+      intent.putExtra("user", currentUser)
       startActivity(intent)
     }
     
@@ -92,12 +93,6 @@ class MainActivity : AppCompatActivity() {
     
     friends_btn.setOnClickListener {
       startActivity(Intent(this, FriendsActivity::class.java))
-    }
-    
-    leadboard_btn.setOnClickListener {
-      // Create an Intent to start the AddFood Activity
-      val intent = Intent(this, DashboardActivity::class.java)
-      startActivity(intent)
     }
     
     mainViewModel.mainScreenOnLoad()

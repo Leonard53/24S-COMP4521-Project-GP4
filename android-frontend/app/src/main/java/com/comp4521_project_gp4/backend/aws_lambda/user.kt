@@ -131,6 +131,7 @@ class User(
   }
   
   suspend fun addEntries(exerciseOrFood: ExerciseOrFood) {
+    println("on99")
     try {
       val updateReq = exerciseOrFood.updateRequest(this)
       ddb.updateItem(updateReq)
