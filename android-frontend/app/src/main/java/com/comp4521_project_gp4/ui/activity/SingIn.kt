@@ -2,6 +2,7 @@ package com.comp4521_project_gp4.ui.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -16,7 +17,7 @@ import com.comp4521_project_gp4.backend.aws_lambda.User
 import kotlinx.coroutines.launch
 
 class SingIn : AppCompatActivity() {
-  val sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE)
+  lateinit var sharedPref: SharedPreferences
   private fun checkUsernameAndPasswordFilledIn(): Boolean {
     val errorText = findViewById<TextView>(R.id.signin_error_text)
     val userNameInput = findViewById<EditText>(R.id.username_text).text
@@ -112,6 +113,7 @@ class SingIn : AppCompatActivity() {
   }
   
   override fun onCreate(savedInstanceState: Bundle?) {
+    sharedPref = getSharedPreferences("cachedUser", Context.MODE_PRIVATE)
     super.onCreate(savedInstanceState)
     val cachedUsername = sharedPref.getString("username", null)
     if (!cachedUsername.isNullOrEmpty()) {
@@ -121,7 +123,7 @@ class SingIn : AppCompatActivity() {
         startActivity(mainActivityIntent(cachedUser))
       }
     }
-      enableEdgeToEdge()
+    enableEdgeToEdge()
     setContentView(R.layout.activity_sing_in)
     val signUpButton = findViewById<Button>(R.id.signup_btn)
     signUpButton.setOnClickListener {
