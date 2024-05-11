@@ -40,7 +40,7 @@ class RecordFoodPage : AppCompatActivity() {
       val foodName = etFoodName.text.toString()
       val calories = etCalories.text.toString()
       
-      val food = Food(currentTime,foodName, calories.toUInt()) //create object
+      val food = Food(currentTime, foodName, calories.toUInt()) //create object
       lifecycleScope.launch { user?.addEntries(food) }         //upload data
       
       //saveFoodRecord(foodName, calories, currentTime)

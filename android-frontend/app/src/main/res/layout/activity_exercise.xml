@@ -15,61 +15,61 @@
     <!-- This FrameLayout will hold the ToolbarFragment -->
   </FrameLayout>
 
-    <TextView
-        android:id="@+id/main_cardTitle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Activity History"
-        android:textColor="@color/material_dynamic_neutral_variant30"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_container" />
+  <TextView
+      android:id="@+id/main_cardTitle1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="44dp"
+      android:text="Activity History"
+      android:textColor="@color/material_dynamic_neutral_variant30"
+      android:textSize="25sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.056"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_container" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exercise_recyclerView"
-        android:layout_width="410dp"
-        android:layout_height="645dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/exercise_buttonCard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_cardTitle1"
-        app:layout_constraintVertical_bias="0.003" />
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/exercise_recyclerView"
+      android:layout_width="410dp"
+      android:layout_height="645dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintBottom_toBottomOf="@+id/exercise_buttonCard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.157"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/main_cardTitle1"
+      app:layout_constraintVertical_bias="0.003" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/exercise_buttonCard"
+  <com.google.android.material.card.MaterialCardView
+      android:id="@+id/exercise_buttonCard"
+      android:layout_width="match_parent"
+      android:layout_height="121dp"
+      app:cardBackgroundColor="@android:color/white"
+      app:cardElevation="12dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:shapeAppearanceOverlay="@style/MainPageButtonCardAppearance">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="121dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardElevation="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:shapeAppearanceOverlay="@style/MainPageButtonCardAppearance">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+      <com.google.android.material.button.MaterialButton
+          android:id="@+id/addExerciseBtn"
+          android:layout_width="368dp"
+          android:layout_height="78dp"
+          android:text="+ Add record"
+          app:cornerRadius="15dp"
+          app:backgroundTint="@color/button_primary"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/addExerciseBtn"
-                android:layout_width="368dp"
-                android:layout_height="78dp"
-                android:text="+ Add record"
-                app:cornerRadius="15dp"
-                app:backgroundTint="@color/button_primary"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+  </com.google.android.material.card.MaterialCardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

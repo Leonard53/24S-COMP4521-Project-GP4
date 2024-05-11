@@ -8,11 +8,11 @@ import com.comp4521_project_gp4.model.FriendsModel
 class FriendViewModel : ViewModel() {
   private val _friends = MutableLiveData<List<FriendsModel.FriendsItem>>()
   val friends: LiveData<List<FriendsModel.FriendsItem>> = _friends
-
+  
   init {
     loadFriends()
   }
-
+  
   private fun loadFriends() {
     // Simulate loading data
     val friendList = listOf(

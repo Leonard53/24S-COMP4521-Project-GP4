@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CircularShapeAppearance">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-    <style name="MainPageButtonCardAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
-        <item name="cornerSizeTopLeft">30dp</item>
-        <item name="cornerSizeTopRight">30dp</item>
-        <item name="cornerSizeBottomLeft">0dp</item>
-        <item name="cornerSizeBottomRight">0dp</item>
-    </style>
+  <style name="CircularShapeAppearance">
+    <item name="cornerFamily">rounded</item>
+    <item name="cornerSize">50%</item>
+  </style>
 
-    <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
-        <item name="boxBackgroundColor">@color/white</item>
-        <item name="boxCornerRadiusTopStart">16dp</item>
-        <item name="boxCornerRadiusTopEnd">16dp</item>
-        <item name="boxCornerRadiusBottomEnd">16dp</item>
-        <item name="boxCornerRadiusBottomStart">16dp</item>
-        <item name="boxStrokeColor">@color/primaryColor</item>
-        <item name="boxStrokeWidth">2dp</item>
-        <item name="hintTextColor">@color/primaryTextColor</item>
-        <item name="android:textColor">@color/secondaryTextColor</item>
-    </style>
-    <color name="button_primary">#FF1B84F2</color>  // Example color
+  <style name="MainPageButtonCardAppearance" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+    <item name="cornerSizeTopLeft">30dp</item>
+    <item name="cornerSizeTopRight">30dp</item>
+    <item name="cornerSizeBottomLeft">0dp</item>
+    <item name="cornerSizeBottomRight">0dp</item>
+  </style>
+
+  <style name="CustomTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+    <item name="boxBackgroundColor">@color/white</item>
+    <item name="boxCornerRadiusTopStart">16dp</item>
+    <item name="boxCornerRadiusTopEnd">16dp</item>
+    <item name="boxCornerRadiusBottomEnd">16dp</item>
+    <item name="boxCornerRadiusBottomStart">16dp</item>
+    <item name="boxStrokeColor">@color/primaryColor</item>
+    <item name="boxStrokeWidth">2dp</item>
+    <item name="hintTextColor">@color/primaryTextColor</item>
+    <item name="android:textColor">@color/secondaryTextColor</item>
+  </style>
+
+  <color name="button_primary">#FF1B84F2</color>
+  // Example color
 
 </resources>
