@@ -1,7 +1,7 @@
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.comp4521_project_gp4.backend.aws_lambda.User
+import com.comp4521_project_gp4.backend.aws.User
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -57,12 +57,12 @@ class MainViewModel : ViewModel() {
       }
     }
     
-    currentUser.getCurrentUserFoodCache().forEach { food ->
-      val foodDate = LocalDate.parse(food.date, DateTimeFormatter.ISO_DATE)
-      if (foodDate.get(weekFields.weekOfWeekBasedYear()) == currentWeek) {
-        weeklyCaloriesIntake += food.foodCalories.toInt()
-      }
-    }
+//    currentUser.getCurrentUserFoodCache().forEach { food ->
+//      val foodDate = LocalDate.parse(food.date, DateTimeFormatter.ISO_DATE)
+//      if (foodDate.get(weekFields.weekOfWeekBasedYear()) == currentWeek) {
+//        weeklyCaloriesIntake += food.foodCalories.toInt()
+//      }
+//    }
     
     updateCaloriesBurned(weeklyCaloriesBurned)
     updateExerciseTime(weeklyExerciseTime)

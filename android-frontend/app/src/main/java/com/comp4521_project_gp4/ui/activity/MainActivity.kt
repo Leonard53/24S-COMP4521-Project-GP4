@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     val loggedInUser = intent.getParcelableExtra<User>("user")
     currentUser = loggedInUser!!
 
-    loggedInUser?.let {
+    loggedInUser.let {
       mainViewModel.setUser(it)
     } ?: run {
       // Handle case where no User object was passed in Intent
@@ -91,15 +91,11 @@ class MainActivity : AppCompatActivity() {
     }
     
     friends_btn.setOnClickListener {
-      startActivity(Intent(this, FriendsActivity::class.java))
-    }
-    
-    leadboard_btn.setOnClickListener {
-      // Create an Intent to start the AddFood Activity
-      val intent = Intent(this, DashboardActivity::class.java)
+      val intent = Intent(this, FriendsActivity::class.java)
+      intent.putExtra("user", currentUser)
       startActivity(intent)
     }
-    
+
     mainViewModel.mainScreenOnLoad()
   }
   
