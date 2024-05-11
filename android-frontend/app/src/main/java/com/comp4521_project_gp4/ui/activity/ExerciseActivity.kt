@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.activity.viewModels
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.backend.aws_lambda.User
 import com.comp4521_project_gp4.ui.adapters.ExerciseAdapter
 import com.comp4521_project_gp4.viewmodel.ExerciseViewModel
 import com.google.android.material.appbar.MaterialToolbar
@@ -16,10 +17,17 @@ import com.google.android.material.button.MaterialButton
 
 class ExerciseActivity : AppCompatActivity() {
   private val viewModel: ExerciseViewModel by viewModels()
+  private lateinit var currentUser: User
+  
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_exercise)
+    
+    currentUser = intent.getParcelableExtra<User>("user")!!
+//    currentUser.let {
+//      ExerciseViewModel.setUser(it)
+//    }
     
     val recyclerView: RecyclerView = findViewById(R.id.exercise_recyclerView)
     // Initialize the adapter with the data
@@ -37,6 +45,7 @@ class ExerciseActivity : AppCompatActivity() {
     val addButton: MaterialButton = findViewById(R.id.addExerciseBtn)
     addButton.setOnClickListener {
       val intent = Intent(this, AddExerciseActivity::class.java)
+      intent.putExtra("user", currentUser)
       startActivity(intent)
     }
     

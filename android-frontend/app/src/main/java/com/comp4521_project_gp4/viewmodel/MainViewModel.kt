@@ -45,27 +45,24 @@ class MainViewModel : ViewModel() {
     val weekFields = WeekFields.of(Locale.getDefault())
     val currentWeek = today.get(weekFields.weekOfWeekBasedYear())
     
-    currentUser.getCurrentUserExerciseCache().forEach { exercise ->
-      val exerciseDate = LocalDate.parse(exercise.exerciseStartTime, DateTimeFormatter.ISO_DATE)
-      if (exerciseDate.get(weekFields.weekOfWeekBasedYear()) == currentWeek) {
-        weeklyCaloriesBurned += exercise.calories.toInt()
-        
-        val startTime = LocalDateTime.parse(exercise.exerciseStartTime, DateTimeFormatter.ISO_DATE_TIME)
-        val endTime = LocalDateTime.parse(exercise.exerciseEndTime, DateTimeFormatter.ISO_DATE_TIME)
-        val duration = Duration.between(startTime, endTime).toMinutes().toInt()
-        weeklyExerciseTime += duration
-      }
-    }
     
+//    currentUser.getCurrentUserExerciseCache().forEach { exercise ->
+//      val exerciseDate = LocalDate.parse(exercise.date, DateTimeFormatter.ISO_DATE)
+//      if (exerciseDate.get(weekFields.weekOfWeekBasedYear()) == currentWeek) {
+//        weeklyCaloriesBurned += exercise.calories.toInt()
+//        weeklyExerciseTime += exercise.exerciseLengthInMins.toInt()
+//      }
+//    }
+//
 //    currentUser.getCurrentUserFoodCache().forEach { food ->
 //      val foodDate = LocalDate.parse(food.date, DateTimeFormatter.ISO_DATE)
 //      if (foodDate.get(weekFields.weekOfWeekBasedYear()) == currentWeek) {
 //        weeklyCaloriesIntake += food.foodCalories.toInt()
 //      }
 //    }
-    
-    updateCaloriesBurned(weeklyCaloriesBurned)
-    updateExerciseTime(weeklyExerciseTime)
-    updateCaloriesIntake(weeklyCaloriesIntake)
+//
+//    updateCaloriesBurned(weeklyCaloriesBurned)
+//    updateExerciseTime(weeklyExerciseTime)
+//    updateCaloriesIntake(weeklyCaloriesIntake)
   }
 }

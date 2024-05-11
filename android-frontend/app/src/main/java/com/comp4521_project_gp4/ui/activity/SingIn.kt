@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 class SingIn : AppCompatActivity() {
   lateinit var sharedPref: SharedPreferences
   private fun checkUsernameAndPasswordFilledIn(): Boolean {
+    
     val errorText = findViewById<TextView>(R.id.signin_error_text)
     val userNameInput = findViewById<EditText>(R.id.username_text).text
     if (userNameInput.isNullOrEmpty()) {
@@ -115,6 +116,8 @@ class SingIn : AppCompatActivity() {
   }
   
   override fun onCreate(savedInstanceState: Bundle?) {
+    println("onl9")
+    
     sharedPref = getSharedPreferences("cachedUser", Context.MODE_PRIVATE)
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()

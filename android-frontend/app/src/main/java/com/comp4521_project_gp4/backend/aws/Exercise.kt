@@ -12,8 +12,8 @@ data class Exercise(
   val date: String,
   val exerciseName: String,
   val exerciseLengthInMins: UInt,
-  val exerciseStartTime: String,
-  val exerciseEndTime: String,
+//  val exerciseStartTime: String,
+//  val exerciseEndTime: String,
   val latitude: Double,
   val longitude: Double,
   val calories: UInt
@@ -23,8 +23,8 @@ data class Exercise(
     returnMap["uuid"] = AttributeValue.S(randomUUID().toString())
     returnMap["date"] = AttributeValue.S(date)
     returnMap["name"] = AttributeValue.S(exerciseName)
-    returnMap["exerciseStartTime"] = AttributeValue.S(exerciseStartTime)
-    returnMap["exerciseEndTime"] = AttributeValue.S(exerciseEndTime)
+//    returnMap["exerciseStartTime"] = AttributeValue.S(exerciseStartTime)
+//    returnMap["exerciseEndTime"] = AttributeValue.S(exerciseEndTime)
     returnMap["latitude"] = AttributeValue.N(latitude.toString())
     returnMap["longitude"] = AttributeValue.N(longitude.toString())
     returnMap["length"] = AttributeValue.N(exerciseLengthInMins.toString())
@@ -66,8 +66,8 @@ data class Exercise(
         val uuid = returnMap["uuid"]?.asS() ?: ""
         val date = returnMap["date"]?.asS() ?: ""
         val name = returnMap["name"]?.asS() ?: ""
-        val exerciseStartTime = returnMap["exerciseStartTime"]?.asS() ?: ""
-        val exerciseEndTime = returnMap["exerciseEndTime"]?.asS() ?: ""
+//        val exerciseStartTime = returnMap["exerciseStartTime"]?.asS() ?: ""
+//        val exerciseEndTime = returnMap["exerciseEndTime"]?.asS() ?: ""
         val latitude = returnMap["latitude"]?.asN()?.toDouble() ?: 0.0
         val longitude = returnMap["longitude"]?.asN()?.toDouble() ?: 0.0
         val length = returnMap["length"]?.asN()?.toUInt() ?: 0u
@@ -76,8 +76,8 @@ data class Exercise(
           date,
           name,
           length,
-          exerciseStartTime,
-          exerciseEndTime,
+//          exerciseStartTime,
+//          exerciseEndTime,
           latitude,
           longitude,
           calories

@@ -74,6 +74,7 @@ class MainActivity : AppCompatActivity() {
     exercise_btn.setOnClickListener {
       // Create an Intent to start the Exercise Activity
       val intent = Intent(this, ExerciseActivity::class.java)
+      intent.putExtra("user", currentUser)
       startActivity(intent)
     }
     
