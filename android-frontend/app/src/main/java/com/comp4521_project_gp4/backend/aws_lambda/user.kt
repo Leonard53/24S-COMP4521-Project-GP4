@@ -4,9 +4,12 @@ import android.os.Parcelable
 import androidx.versionedparcelable.ParcelField
 import aws.sdk.kotlin.runtime.auth.credentials.StaticCredentialsProvider
 import aws.sdk.kotlin.services.dynamodb.DynamoDbClient
+import aws.sdk.kotlin.services.dynamodb.model.AttributeAction
 import aws.sdk.kotlin.services.dynamodb.model.AttributeValue
+import aws.sdk.kotlin.services.dynamodb.model.AttributeValueUpdate
 import aws.sdk.kotlin.services.dynamodb.model.GetItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
+import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
 import aws.smithy.kotlin.runtime.collections.push
 import aws.smithy.kotlin.runtime.util.type
 import kotlinx.parcelize.IgnoredOnParcel
@@ -56,6 +59,27 @@ class User(
     return currentUserFoodCache
   }
   
+  suspend fun getProfilePicUrl(): String {
+    val req = GetItemRequest {
+      tableName = USERDB_NAME
+      key = currentUserKeyInDB
+    }
+    return ddb.getItem(req).item?.get("profile_pic")?.asS() ?: ""
+  }
+  
+  suspend fun setProfilePicUrl(newProfilePicUrl: String) {
+    val updateValues = mutableMapOf<String, AttributeValueUpdate>()
+    updateValues["profile_pic"] = AttributeValueUpdate {
+      value = AttributeValue.S(newProfilePicUrl)
+      action = AttributeAction.Put
+    }
+    val req = UpdateItemRequest {
+      tableName = USERDB_NAME
+      key = currentUserKeyInDB
+      attributeUpdates = updateValues
+    }
+    ddb.updateItem(req)
+  }
   
   suspend fun signupUser() {
     val req = GetItemRequest {
@@ -69,6 +93,7 @@ class User(
       emptyItem["username"] = AttributeValue.S(this.userName)
       emptyItem["exercise_log"] = AttributeValue.L(emptyList<AttributeValue.M>())
       emptyItem["food_log"] = AttributeValue.L(emptyList<AttributeValue.M>())
+      emptyItem["profile_pic"] = AttributeValue.S("")
       val signupRequest = PutItemRequest {
         tableName = USERDB_NAME
         item = emptyItem
