@@ -25,6 +25,7 @@ val ddb = DynamoDbClient {
 @Parcelize
 class User(
   private val userName: String,
+  private val currentUserFriendList: MutableList<User> = mutableListOf(),
   private val currentUserExerciseCache: MutableList<Exercise> = mutableListOf(),
   private val currentUserFoodCache: MutableList<Food> = mutableListOf()
 ) : Parcelable {
@@ -94,6 +95,7 @@ class User(
       emptyItem["exercise_log"] = AttributeValue.L(emptyList<AttributeValue.M>())
       emptyItem["food_log"] = AttributeValue.L(emptyList<AttributeValue.M>())
       emptyItem["profile_pic"] = AttributeValue.S("")
+      emptyItem["friend_list"] = AttributeValue.L(emptyList<AttributeValue.S>())
       val signupRequest = PutItemRequest {
         tableName = USERDB_NAME
         item = emptyItem
@@ -124,6 +126,44 @@ class User(
     } catch (_: Exception) {
       throw Exception("User does not exist")
     }
+  }
+  
+  suspend fun addFriend(username: String) {
+    addFriend(User(username))
+  }
+  
+  suspend fun addFriend(friend: User) {
+    val checkIfFriendInDb = GetItemRequest {
+      tableName = USERDB_NAME
+      key = friend.getCurrentUserKeyInDB()
+    }
+    val res = ddb.getItem(checkIfFriendInDb)
+    if (res.item.isNullOrEmpty()) throw Exception("User not found")
+    val updateItem = mutableMapOf<String, AttributeValue>()
+    updateItem[":newFriend"] = AttributeValue.L(listOf(AttributeValue.S(friend.getUsername())))
+    val req = UpdateItemRequest {
+      tableName = USERDB_NAME
+      key = friend.getCurrentUserKeyInDB()
+      updateExpression = "SET friend_list = list_append(friend_list, :newFriend)"
+      expressionAttributeValues = updateItem
+    }
+    ddb.updateItem(req)
+    currentUserFriendList.add(friend)
+  }
+  
+  suspend fun getUserFriend(): List<String> {
+    val req = GetItemRequest {
+      tableName = USERDB_NAME
+      key = currentUserKeyInDB
+    }
+    val res = ddb.getItem(req)
+    val finalList = mutableListOf<String>()
+    (res.item?.get("friend_list")?.asL() ?: emptyList()).forEach { currentFriend ->
+      finalList.add(
+        currentFriend.asS()
+      )
+    }
+    return finalList
   }
   
   suspend fun addEntries(exerciseOrFood: ExerciseOrFood) {
