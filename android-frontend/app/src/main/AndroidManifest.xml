@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
   <uses-permission android:name="android.permission.INTERNET" />
   <application
       android:allowBackup="true"
@@ -15,6 +16,10 @@
     <activity
         android:name="com.comp4521_project_gp4.ui.activity.SingIn"
         android:exported="true">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
     </activity>
     <activity
         android:name="com.comp4521_project_gp4.ui.activity.RecordFoodPage"
@@ -22,8 +27,7 @@
     <activity
         android:name="com.comp4521_project_gp4.ui.activity.AddFood"
         android:exported="false" />
-    <activity android:name="com.comp4521_project_gp4.ui.activity.dashboard">
-    </activity>
+    <activity android:name="com.comp4521_project_gp4.ui.activity.dashboard" />
     <activity android:name="com.comp4521_project_gp4.ui.activity.AddExerciseActivity">
       <!-- Optionally, configure the parent activity and other attributes -->
     </activity>
@@ -36,12 +40,7 @@
         android:name="com.comp4521_project_gp4.ui.activity.MainActivity"
         android:exported="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
+        android:theme="@style/AppTheme" />
   </application>
 
 </manifest>

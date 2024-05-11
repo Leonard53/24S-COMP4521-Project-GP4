@@ -38,6 +38,10 @@ class User(
     "username" to AttributeValue.S(userName)
   )
   
+  fun getUsername(): String {
+    return userName
+  }
+  
   fun getCurrentUserKeyInDB(): MutableMap<String, AttributeValue.S> {
     return currentUserKeyInDB
   }

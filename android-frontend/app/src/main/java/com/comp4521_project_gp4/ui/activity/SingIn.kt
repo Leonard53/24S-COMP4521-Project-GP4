@@ -1,5 +1,6 @@
 package com.comp4521_project_gp4.ui.activity
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import com.comp4521_project_gp4.backend.aws_lambda.User
 import kotlinx.coroutines.launch
 
 class SingIn : AppCompatActivity() {
+  val sharedPref = getSharedPreferences("user_data", Context.MODE_PRIVATE)
   private fun checkUsernameAndPasswordFilledIn(): Boolean {
     val errorText = findViewById<TextView>(R.id.signin_error_text)
     val userNameInput = findViewById<EditText>(R.id.username_text).text
@@ -85,6 +87,7 @@ class SingIn : AppCompatActivity() {
       signInOrSignUpExceptionHandler(e)
       return null
     }
+    sharedPref.edit().putString("username", currentUser.getUsername()).apply()
     startActivity(mainActivityIntent(currentUser))
     return currentUser
   }
@@ -97,6 +100,7 @@ class SingIn : AppCompatActivity() {
       signInOrSignUpExceptionHandler(e)
       return null
     }
+    sharedPref.edit().putString("username", currentUser.getUsername()).apply()
     startActivity(mainActivityIntent(currentUser))
     return currentUser
   }
@@ -109,7 +113,15 @@ class SingIn : AppCompatActivity() {
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    enableEdgeToEdge()
+    val cachedUsername = sharedPref.getString("username", null)
+    if (!cachedUsername.isNullOrEmpty()) {
+      lifecycleScope.launch {
+        val cachedUser = User(cachedUsername)
+        cachedUser.signinUser()
+        startActivity(mainActivityIntent(cachedUser))
+      }
+    }
+      enableEdgeToEdge()
     setContentView(R.layout.activity_sing_in)
     val signUpButton = findViewById<Button>(R.id.signup_btn)
     signUpButton.setOnClickListener {
