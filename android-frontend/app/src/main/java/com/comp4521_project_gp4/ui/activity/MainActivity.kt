@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     
     leadboard_btn.setOnClickListener {
       // Create an Intent to start the AddFood Activity
-      val intent = Intent(this, dashboard::class.java)
+      val intent = Intent(this, DashboardActivity::class.java)
       startActivity(intent)
     }
     

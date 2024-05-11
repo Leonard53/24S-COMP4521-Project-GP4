@@ -41,7 +41,7 @@
     <activity
         android:name="com.comp4521_project_gp4.ui.activity.AddFood"
         android:exported="false" />
-    <activity android:name="com.comp4521_project_gp4.ui.activity.dashboard" />
+    <activity android:name="com.comp4521_project_gp4.ui.activity.DashboardActivity" />
 
     <activity android:name="com.comp4521_project_gp4.ui.activity.AddExerciseActivity">
       <!-- Optionally, configure the parent activity and other attributes -->

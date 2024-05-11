@@ -1,11 +1,15 @@
 package com.comp4521_project_gp4.ui.activity
 
-import android.content.Intent
+import ToolbarFragment
 import android.graphics.Color
 import android.os.Bundle
-import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.ui.adapters.DashboardAdapter
+import com.comp4521_project_gp4.viewmodel.DashboardViewModel
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -14,12 +18,29 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 
-class dashboard : AppCompatActivity() {
+class DashboardActivity : AppCompatActivity() {
+  private val dashboardViewModel: DashboardViewModel by viewModels()
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_dashboard)
     
-    val return_btn = findViewById<TextView>(R.id.dashbtnreturn);
+    // Dynamically add the Toolbar Fragment
+    if (savedInstanceState == null) {
+      supportFragmentManager.beginTransaction()
+        .replace(R.id.toolbar_container, ToolbarFragment())
+        .commit()
+    }
+    
+    // Set up RecyclerView
+    val recyclerView = findViewById<RecyclerView>(R.id.dashboard_recyclerview)
+    val adapter = DashboardAdapter(emptyList())  // Initialize adapter with an empty list
+    recyclerView.adapter = adapter
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    
+    // Observe the ViewModel's LiveData for changes and update the adapter
+    dashboardViewModel.dashboardItems.observe(this) { items ->
+      adapter.updateData(items)
+    }
     
     val barChart = findViewById<BarChart>(R.id.barChartt)
     barChart.setDrawBarShadow(false)
@@ -28,7 +49,7 @@ class dashboard : AppCompatActivity() {
     barChart.setMaxVisibleValueCount(50)
     barChart.setPinchZoom(false)
     barChart.setDrawGridBackground(true)
-    
+    barChart.setBackgroundColor(Color.WHITE)
     /*
     * setDrawBarShadow(false): 禁用條形陰影。
     setDrawValueAboveBar(true): 設定條形圖上方顯示數值。
@@ -67,7 +88,7 @@ class dashboard : AppCompatActivity() {
     xAxis.valueFormatter = IndexAxisValueFormatter(xAxisLabels)
     xAxis.granularity = 1f
     xAxis.labelCount = xAxisLabels.size
-    xAxis.textColor = Color.CYAN
+    xAxis.textColor = Color.GRAY
     
     
     val leftAxis = barChart.axisLeft
@@ -75,17 +96,10 @@ class dashboard : AppCompatActivity() {
     
     val rightAxis = barChart.axisRight
     //rightAxis.isEnabled = false
-    rightAxis.textColor = Color.CYAN
+    rightAxis.textColor = Color.GRAY
     
     val legend = barChart.legend
     legend.isEnabled = false
     barChart.invalidate()
-    
-    return_btn.setOnClickListener {
-      // Create an Intent to start the AddFood Activity
-      val intent = Intent(this, MainActivity::class.java)
-      startActivity(intent)
-    }
-    
   }
 }
