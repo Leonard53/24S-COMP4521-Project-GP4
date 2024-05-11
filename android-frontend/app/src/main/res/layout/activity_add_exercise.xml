@@ -121,17 +121,27 @@
             android:inputType="number" />
       </com.google.android.material.textfield.TextInputLayout>
 
-      <ImageView
-          android:id="@+id/exerciseImageView"
+<!--      <ImageView-->
+<!--          android:id="@+id/exerciseImageView"-->
+<!--          android:layout_width="0dp"-->
+<!--          android:layout_height="200dp"-->
+<!--          android:layout_marginTop="16dp"-->
+<!--          android:background="#D3D3D3"-->
+<!--          android:scaleType="center"-->
+<!--          android:src="@drawable/add_image"-->
+<!--          app:layout_constraintEnd_toEndOf="parent"-->
+<!--          app:layout_constraintStart_toStartOf="parent"-->
+<!--          app:layout_constraintTop_toBottomOf="@id/caloriesInputLayout" />-->
+
+      <fragment
+          android:id="@+id/mapView"
+          android:name="com.google.android.gms.maps.SupportMapFragment"
           android:layout_width="0dp"
           android:layout_height="200dp"
           android:layout_marginTop="16dp"
-          android:background="#D3D3D3"
-          android:scaleType="center"
-          android:src="@drawable/add_image"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/caloriesInputLayout" />
+          app:layout_constraintTop_toBottomOf="@id/caloriesInputLayout"/>
 
 
       <com.google.android.material.button.MaterialButton
@@ -145,7 +155,7 @@
           app:cornerRadius="15dp"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/exerciseImageView" />
+          app:layout_constraintTop_toBottomOf="@id/mapView" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

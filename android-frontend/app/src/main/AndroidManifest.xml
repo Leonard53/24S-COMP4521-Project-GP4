@@ -4,6 +4,8 @@
 
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
   <application
       android:allowBackup="true"
@@ -15,6 +17,10 @@
       android:supportsRtl="true"
       android:theme="@style/AppTheme"
       tools:targetApi="31">
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyDgwpiY11xxbNuviFh7Klh8VxRqVGTpaGg"/>
 
     <activity
         android:name="com.comp4521_project_gp4.ui.activity.SingIn"

@@ -1,16 +1,32 @@
 package com.comp4521_project_gp4.ui.activity
 
 import ToolbarFragment
+import android.content.Context
 import android.os.Bundle
-import android.widget.ImageView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import android.content.pm.PackageManager
+import android.location.Criteria
+import android.location.LocationManager
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.ui.viewmodel.AddExerciseViewModel
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 
-class AddExerciseActivity : AppCompatActivity() {
+class AddExerciseActivity : AppCompatActivity(), OnMapReadyCallback {
+  private lateinit var mMap: GoogleMap
+  private val viewModel: AddExerciseViewModel by viewModels()
+  private val MY_LOCATION_REQUEST_CODE = 101
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -23,47 +39,93 @@ class AddExerciseActivity : AppCompatActivity() {
         .commit()
     }
     
-    val dateInput = findViewById<TextInputEditText>(R.id.exerciseDateEditText)
-    val durationInput = findViewById<TextInputEditText>(R.id.exerciseDurationEditText)
+    val mapFragment = supportFragmentManager.findFragmentById(R.id.mapView) as SupportMapFragment
+    mapFragment.getMapAsync(this)
     
-    // Set up click listeners for dateTimeEditText
+    val dateInput = findViewById<TextInputEditText>(R.id.exerciseDateEditText)
+    val timeInput = findViewById<TextInputEditText>(R.id.exerciseDurationEditText)
+    
+    viewModel.selectedDate.observe(this) { date ->
+      dateInput.setText(date)
+    }
+    
+    viewModel.selectedTime.observe(this) { time ->
+      timeInput.setText(time)
+    }
+    
     dateInput.setOnClickListener {
       showDatePicker()
     }
     
-    durationInput.setOnClickListener {
+    timeInput.setOnClickListener {
       showTimePicker()
     }
     
+    checkLocationPermission()
+  }
+  
+  private fun checkLocationPermission() {
+    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+      != PackageManager.PERMISSION_GRANTED) {
+      ActivityCompat.requestPermissions(this,
+        arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+        MY_LOCATION_REQUEST_CODE)
+    }
+  }
+  
+  override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+    if (requestCode == MY_LOCATION_REQUEST_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+      if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+        == PackageManager.PERMISSION_GRANTED) {
+        mMap.isMyLocationEnabled = true
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val provider = locationManager.getBestProvider(Criteria(), true)
+        val location = provider?.let { locationManager.getLastKnownLocation(it) }
+        location?.let {
+          val userLatLng = LatLng(it.latitude, it.longitude)
+          mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15f))
+        }
+      }
+    } else {
+      // Handle case where permission was denied
+    }
+  }
+  
+  override fun onMapReady(googleMap: GoogleMap) {
+    mMap = googleMap
+    if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+      == PackageManager.PERMISSION_GRANTED) {
+      mMap.isMyLocationEnabled = true
+      val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+      val provider = locationManager.getBestProvider(Criteria(), true)
+      val location = provider?.let { locationManager.getLastKnownLocation(it) }
+      location?.let {
+        val userLatLng = LatLng(it.latitude, it.longitude)
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15f))
+      }
+    }
   }
   
   private fun showDatePicker() {
-    val dateInput = findViewById<TextInputEditText>(R.id.exerciseDateEditText)
-    
     val datePicker = MaterialDatePicker.Builder.datePicker()
       .setTitleText("Select date")
       .build()
     datePicker.addOnPositiveButtonClickListener { date ->
-      // Format the date and set it to the EditText
-      dateInput.setText(datePicker.headerText)
+      viewModel.setDate(datePicker.headerText)
     }
-    datePicker.show(supportFragmentManager, datePicker.toString())
+    datePicker.show(supportFragmentManager, "datePicker")
   }
   
   private fun showTimePicker() {
-    val durationInput = findViewById<TextInputEditText>(R.id.exerciseDurationEditText)
-    
     val timePicker = MaterialTimePicker.Builder()
-      .setTitleText("Select Time")
       .setTimeFormat(TimeFormat.CLOCK_24H)
+      .setTitleText("Select Time")
       .build()
     timePicker.addOnPositiveButtonClickListener {
-      // You could format the time and append it to the date
-      val pickedHour = timePicker.hour
-      val pickedMinute = timePicker.minute
-      val timeString = String.format("%02d:%02d", pickedHour, pickedMinute)
-      durationInput.setText("$timeString")
+      val timeString = String.format("%02d:%02d", timePicker.hour, timePicker.minute)
+      viewModel.setTime(timeString)
     }
-    timePicker.show(supportFragmentManager, timePicker.toString())
+    timePicker.show(supportFragmentManager, "timePicker")
   }
 }
