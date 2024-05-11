@@ -9,7 +9,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.lifecycle.lifecycleScope
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.backend.aws_lambda.Food
+import com.comp4521_project_gp4.backend.aws_lambda.User
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -25,14 +29,21 @@ class RecordFoodPage : AppCompatActivity() {
     var etCalories = findViewById<EditText>(R.id.etCalories)
     var tvCurrentTime = findViewById<TextView>(R.id.tvCurrentTime)
     
+    val user = intent.getParcelableExtra<User>("user")  //get username
+    
     val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
     tvCurrentTime.text = "Eating Time: $currentTime"
     
     
     btnSaveFood.setOnClickListener {
+      
       val foodName = etFoodName.text.toString()
       val calories = etCalories.text.toString()
-      saveFoodRecord(foodName, calories, currentTime)
+      
+      val food = Food(currentTime,foodName, calories.toUInt()) //create object
+      lifecycleScope.launch { user?.addEntries(food) }         //upload data
+      
+      //saveFoodRecord(foodName, calories, currentTime)
       finish()
     }
   }

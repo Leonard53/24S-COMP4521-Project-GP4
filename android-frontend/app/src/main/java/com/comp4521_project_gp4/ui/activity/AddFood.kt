@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ListView
 import android.widget.TextView
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.backend.aws_lambda.User
 
 class AddFood : AppCompatActivity() {
   
@@ -17,8 +18,11 @@ class AddFood : AppCompatActivity() {
   private lateinit var listView: ListView
   private lateinit var btnAddFood: Button
   private lateinit var sharedPrefs: SharedPreferences
-  
+  private  lateinit var user: User
   override fun onCreate(savedInstanceState: Bundle?) {
+    
+    user = intent.getParcelableExtra<User>("user")!!
+    
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_add_food)
     sharedPrefs = getSharedPreferences("FoodPrefs", Context.MODE_PRIVATE)
@@ -39,9 +43,10 @@ class AddFood : AppCompatActivity() {
     }
     
     btnAddFood.setOnClickListener {
-      val intent = Intent(this, RecordFoodPage::class.java).also {
-        startActivity(it)
-      }
+      val intent = Intent(this, RecordFoodPage::class.java)
+        intent.putExtra("user", user)
+        startActivity(intent)
+      
     }
     
     loadFoodRecords()
@@ -58,7 +63,6 @@ class AddFood : AppCompatActivity() {
         foodList.add(it)
       }
     }
-    
   }
   
 }

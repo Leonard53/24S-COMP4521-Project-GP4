@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
         nutrition_btn.setOnClickListener {
               // Create an Intent to start the AddFood Activity
               val intent = Intent(this, AddFood::class.java)
+              intent.putExtra("user", loggedInUser)
               startActivity(intent)
         }
       

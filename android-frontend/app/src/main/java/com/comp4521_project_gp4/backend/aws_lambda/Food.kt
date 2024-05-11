@@ -26,7 +26,7 @@ data class Food(
   
   override suspend fun updateRequest(user: User): UpdateItemRequest {
     val updateItem = mutableMapOf<String, AttributeValue>()
-    updateItem[":newItem"] = AttributeValue.M(convertToMap())
+    updateItem[":newItem"] = AttributeValue.L(listOf(AttributeValue.M(convertToMap())))
     val req = UpdateItemRequest {
       tableName = USERDB_NAME
       key = user.getCurrentUserKeyInDB()
