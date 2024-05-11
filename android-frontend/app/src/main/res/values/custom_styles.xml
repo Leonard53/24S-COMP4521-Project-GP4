@@ -23,6 +23,6 @@
         <item name="hintTextColor">@color/primaryTextColor</item>
         <item name="android:textColor">@color/secondaryTextColor</item>
     </style>
-    <color name="add_exercise_button">#FF1B84F2</color>  // Example color
+    <color name="button_primary">#FF1B84F2</color>  // Example color
 
 </resources>
