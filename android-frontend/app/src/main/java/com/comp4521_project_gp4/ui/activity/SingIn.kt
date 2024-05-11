@@ -117,6 +117,9 @@ class SingIn : AppCompatActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     sharedPref = getSharedPreferences("cachedUser", Context.MODE_PRIVATE)
     super.onCreate(savedInstanceState)
+    enableEdgeToEdge()
+    setContentView(R.layout.activity_sing_in)
+    hideSignInSignUpBtn()
     val cachedUsername = sharedPref.getString("username", null)
     if (!cachedUsername.isNullOrEmpty()) {
       lifecycleScope.launch {
@@ -125,8 +128,7 @@ class SingIn : AppCompatActivity() {
         startActivity(mainActivityIntent(cachedUser))
       }
     }
-    enableEdgeToEdge()
-    setContentView(R.layout.activity_sing_in)
+    showSignInSignUpBtn()
     val signUpButton = findViewById<Button>(R.id.signup_btn)
     signUpButton.setOnClickListener {
       lifecycleScope.launch {

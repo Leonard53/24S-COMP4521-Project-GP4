@@ -19,6 +19,7 @@ import java.util.Date
 import java.util.Locale
 
 class RecordFoodPage : AppCompatActivity() {
+  lateinit var currentUser: User
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_record_food_page)
@@ -30,6 +31,7 @@ class RecordFoodPage : AppCompatActivity() {
     var tvCurrentTime = findViewById<TextView>(R.id.tvCurrentTime)
     
     val user = intent.getParcelableExtra<User>("user")  //get username
+    currentUser = user!!
     
     val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
     tvCurrentTime.text = "Eating Time: $currentTime"
@@ -41,23 +43,9 @@ class RecordFoodPage : AppCompatActivity() {
       val calories = etCalories.text.toString()
       
       val food = Food(currentTime, foodName, calories.toUInt()) //create object
-      lifecycleScope.launch { user?.addEntries(food) }         //upload data
-      
+      lifecycleScope.launch { currentUser.addEntries(food) }         //upload data
       //saveFoodRecord(foodName, calories, currentTime)
       finish()
     }
   }
-  
-  private fun saveFoodRecord(foodName: String, calories: String, eatTime: String) {
-    val sharedPrefs = getSharedPreferences("FoodPrefs", Context.MODE_PRIVATE)
-    val editor = sharedPrefs.edit()
-    val count = sharedPrefs.getInt("count", 0) + 1
-    val record = "Food Name: $foodName\nCalories: $calories kcal\nEating Time: $eatTime"
-    editor.apply {
-      putString("foodRecord_$count", record)
-      putInt("count", count)
-      apply()
-    }
-  }
-  
 }

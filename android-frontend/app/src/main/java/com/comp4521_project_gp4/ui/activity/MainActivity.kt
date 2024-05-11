@@ -14,6 +14,7 @@ import com.comp4521_project_gp4.R
 
 class MainActivity : AppCompatActivity() {
   private lateinit var menuButton: ImageView
+  private lateinit var currentUser: User
   
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -23,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         View.SYSTEM_UI_FLAG_LAYOUT_STABLE
     setContentView(R.layout.activity_main)
     val loggedInUser = intent.getParcelableExtra<User>("user")
-    println(loggedInUser?.getUsername())
+    currentUser = loggedInUser!!
+    println(loggedInUser.getUsername())
     val calories_burned = findViewById<TextView>(R.id.info1_value)
     val calories_intake = findViewById<TextView>(R.id.info2_value)
     val exercise_time = findViewById<TextView>(R.id.info3_value)
@@ -50,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     nutrition_btn.setOnClickListener {
       // Create an Intent to start the AddFood Activity
       val intent = Intent(this, AddFood::class.java)
-      intent.putExtra("user", loggedInUser)
+      intent.putExtra("user", currentUser)
       startActivity(intent)
     }
     
@@ -62,11 +64,6 @@ class MainActivity : AppCompatActivity() {
     
     friends_btn.setOnClickListener {
       startActivity(Intent(this, FriendsActivity::class.java))
-    }
-    nutrition_btn.setOnClickListener {
-      // Create an Intent to start the AddFood Activity
-      val intent = Intent(this, AddFood::class.java)
-      startActivity(intent)
     }
     
     leadboard_btn.setOnClickListener {
