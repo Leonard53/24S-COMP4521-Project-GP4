@@ -40,8 +40,8 @@
           android:textColor="@color/material_dynamic_neutral_variant30"
           android:textSize="15dp"
           android:textStyle="bold"
-          app:layout_constraintTop_toTopOf="parent"
-          tools:layout_editor_absoluteX="-1dp" />
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
 
       <com.github.mikephil.charting.charts.BarChart
           android:id="@+id/barChartt"
