@@ -21,6 +21,7 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
+    <activity android:name=".ui.activity.FriendsActivity" />
     <activity
         android:name="com.comp4521_project_gp4.ui.activity.RecordFoodPage"
         android:exported="false" />

@@ -14,7 +14,6 @@ class ExerciseAdapter(private var cardItemList: List<ExerciseModel.ExerciseItem>
         var exerciseType: TextView = itemView.findViewById(R.id.exercise_type)
         var exerciseDateTime: TextView = itemView.findViewById(R.id.exercise_date_time)
         var exerciseCalories: TextView = itemView.findViewById(R.id.exercise_calories)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CardViewHolder {

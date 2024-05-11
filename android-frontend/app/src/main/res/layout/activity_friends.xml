@@ -1,44 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-  <!-- Input field for adding a new friend -->
-  <com.google.android.material.textfield.TextInputLayout
-      android:id="@+id/usernameInputLayout"
-      style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+  <!-- Toolbar Container -->
+  <FrameLayout
+      android:id="@+id/toolbar_container"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_margin="16dp"
-      android:padding="8dp"
-      app:boxStrokeColor="@color/teal_200"
-      app:hintTextColor="@color/teal_200"
       app:layout_constraintTop_toTopOf="parent">
+    <!-- This FrameLayout will hold the ToolbarFragment -->
+  </FrameLayout>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/usernameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter username" />
-  </com.google.android.material.textfield.TextInputLayout>
-
-  <!-- Button to add a new friend -->
-  <Button
-      android:id="@+id/addFriendButton"
+  <TextView
+      android:id="@+id/friendsTitle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="Add Friend"
-      android:layout_below="@id/usernameInputLayout"
-      android:layout_centerHorizontal="true"
-      android:layout_marginTop="8dp" />
+      android:layout_marginTop="16dp"
+      android:text="Friends"
+      android:textColor="@color/material_dynamic_neutral_variant30"
+      android:textSize="25sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toTopOf="@+id/friendsRecyclerView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.066"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_container"
+      app:layout_constraintVertical_bias="0.852" />
 
-  <!-- RecyclerView for displaying the list of friends -->
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/friendsRecyclerView"
+      android:layout_width="414dp"
+      android:layout_height="667dp"
+      app:layout_constraintBottom_toTopOf="@+id/friend_buttonCard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent" />
+
+  <com.google.android.material.card.MaterialCardView
+      android:id="@+id/friend_buttonCard"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_below="@id/addFriendButton"
-      android:layout_marginTop="16dp" />
-</RelativeLayout>
+      android:layout_height="111dp"
+      app:cardBackgroundColor="@android:color/white"
+      app:cardElevation="12dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:shapeAppearanceOverlay="@style/MainPageButtonCardAppearance">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addFriendButton"
+        android:layout_width="368dp"
+        android:layout_height="84dp"
+        android:layout_gravity="center"
+        android:text="Add Friend"
+        app:backgroundTint="@color/button_primary"
+        app:cornerRadius="15dp" />
+  </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
