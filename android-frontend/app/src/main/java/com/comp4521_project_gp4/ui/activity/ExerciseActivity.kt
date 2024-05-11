@@ -50,8 +50,7 @@ class ExerciseActivity : AppCompatActivity() {
   }
   
   private fun setToolbarTitle(title: String) {
-    val fragment =
-      supportFragmentManager.findFragmentById(R.id.toolbar_container) as? ToolbarFragment
+    val fragment = supportFragmentManager.findFragmentById(R.id.toolbar_container) as? ToolbarFragment
     fragment?.setToolbarTitle(title)
   }
 }

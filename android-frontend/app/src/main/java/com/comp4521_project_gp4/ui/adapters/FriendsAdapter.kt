@@ -9,8 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.model.FriendsModel
 
-class FriendsAdapter(private var cardItemList: List<FriendsModel.FriendsItem>) :
-  RecyclerView.Adapter<FriendsAdapter.CardViewHolder>() {
+class FriendsAdapter(private var cardItemList: List<FriendsModel.FriendsItem>) : RecyclerView.Adapter<FriendsAdapter.CardViewHolder>() {
   class CardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var friendsName: TextView = itemView.findViewById(R.id.friendCardName)
   }

@@ -1,5 +1,6 @@
 <!-- res/layout/layout_toolbar.xml -->
-<com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.appbar.AppBarLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/appBarLayout"
     android:layout_width="match_parent"
@@ -13,6 +14,6 @@
       android:background="#FFFFFF"
       android:minHeight="?attr/actionBarSize"
       android:title="Your Activity Title"
-      app:navigationIcon="@drawable/arrow_back" />
+      app:navigationIcon="@drawable/arrow_back"/>
 
 </com.google.android.material.appbar.AppBarLayout>

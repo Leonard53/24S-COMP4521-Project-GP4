@@ -1,5 +1,4 @@
 package com.comp4521_project_gp4.ui.activity
-
 import ToolbarFragment
 import android.os.Bundle
 import android.widget.TextView
@@ -17,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.ui.adapters.FriendsAdapter
 import com.comp4521_project_gp4.viewmodel.FriendViewModel
-
 class FriendsActivity : AppCompatActivity() {
   private val viewModel: FriendViewModel by viewModels()
   
@@ -33,7 +31,7 @@ class FriendsActivity : AppCompatActivity() {
     
     val addFriendBtn: Button = findViewById(R.id.addFriendButton)
     
-    addFriendBtn.setOnClickListener {
+    addFriendBtn.setOnClickListener{
       showInputDialog()
     }
     

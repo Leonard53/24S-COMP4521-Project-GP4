@@ -19,7 +19,7 @@
       android:layout_marginTop="18dp"
       android:textStyle="bold"
       android:textColor="#1087E6"
-      android:fontFamily="sans-serif" />
+      android:fontFamily="sans-serif"/>
 
 
   <com.google.android.material.button.MaterialButton
@@ -33,7 +33,7 @@
       android:layout_marginTop="18dp"
       android:textStyle="bold"
       android:textColor="#4CAF50"
-      android:fontFamily="sans-serif" />
+      android:fontFamily="sans-serif"/>
 
   <ListView
       android:id="@+id/lvFoodRecords"
@@ -44,7 +44,7 @@
       android:padding="8dp"
       android:clipToPadding="false"
       android:scrollbarStyle="outsideOverlay"
-      android:fontFamily="sans-serif" />
+      android:fontFamily="sans-serif"/>
 
 
 </LinearLayout>

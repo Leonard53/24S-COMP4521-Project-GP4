@@ -33,5 +33,5 @@
       android:layout_gravity="center_horizontal"
       android:layout_marginTop="16dp"
       app:cornerRadius="4dp"
-      app:backgroundTint="@color/button_primary" />
+      app:backgroundTint="@color/button_primary"/>
 </LinearLayout>

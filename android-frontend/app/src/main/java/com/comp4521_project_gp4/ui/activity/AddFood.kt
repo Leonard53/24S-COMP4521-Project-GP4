@@ -18,7 +18,7 @@ class AddFood : AppCompatActivity() {
   private lateinit var listView: ListView
   private lateinit var btnAddFood: Button
   private lateinit var sharedPrefs: SharedPreferences
-  private lateinit var user: User
+  private  lateinit var user: User
   override fun onCreate(savedInstanceState: Bundle?) {
     
     user = intent.getParcelableExtra<User>("user")!!
@@ -44,8 +44,8 @@ class AddFood : AppCompatActivity() {
     
     btnAddFood.setOnClickListener {
       val intent = Intent(this, RecordFoodPage::class.java)
-      intent.putExtra("user", user)
-      startActivity(intent)
+        intent.putExtra("user", user)
+        startActivity(intent)
       
     }
     

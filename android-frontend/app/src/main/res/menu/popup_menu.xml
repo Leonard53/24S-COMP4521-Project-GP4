@@ -10,5 +10,5 @@
   <item
       android:id="@+id/menu_logout"
       android:title="Logout"
-      android:clickable="true" />
+      android:clickable="true"/>
 </menu>
