@@ -78,10 +78,10 @@ class AddExerciseViewModel(application: Application) : AndroidViewModel(applicat
     }
     
     // Check if the location is not set
-    if (selectedLocation.value == null) {
-      _validationMessage.value = "Please select a location."
-      return false
-    }
+//    if (selectedLocation.value == null) {
+//      _validationMessage.value = "Please select a location."
+//      return false
+//    }
     
     // Check if calories are not entered
     if (exerciseCalories.value == null) {
@@ -114,8 +114,8 @@ class AddExerciseViewModel(application: Application) : AndroidViewModel(applicat
       selectedDate.value!!,
       exerciseType.value!!,
       totalMinutes.toUInt(),
-      selectedLocation.value!!.latitude,
-      selectedLocation.value!!.longitude,
+      selectedLocation.value?.latitude ?: 22.3375,
+      selectedLocation.value?.longitude ?: 114.263,
       exerciseCalories.value!!.toUInt()
     )
     
