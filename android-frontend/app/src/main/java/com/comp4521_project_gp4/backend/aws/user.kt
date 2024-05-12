@@ -157,7 +157,7 @@ class User(
     val req = UpdateItemRequest {
       tableName = USERDB_NAME
       key = currentUserKeyInDB
-      updateExpression = "SET friend_list = list_append(friend_list, :newFriend)"
+      updateExpression = "SET friend_list = list_append(:newFriend, friend_list)"
       expressionAttributeValues = updateItem
     }
     ddb.updateItem(req)

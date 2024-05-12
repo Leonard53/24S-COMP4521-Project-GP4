@@ -1,17 +1,20 @@
 package com.comp4521_project_gp4.ui.activity
 
 import ToolbarFragment
-import android.os.Bundle
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.LinearLayoutManager
+import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.backend.aws.User
 import com.comp4521_project_gp4.ui.adapters.ExerciseAdapter
 import com.comp4521_project_gp4.viewmodel.ExerciseViewModel
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class ExerciseActivity : AppCompatActivity() {
   private val viewModel: ExerciseViewModel by viewModels()
@@ -38,6 +41,7 @@ class ExerciseActivity : AppCompatActivity() {
     recyclerView.layoutManager = LinearLayoutManager(this)
     
     viewModel.exercises.observe(this) { exercises ->
+      println(exercises)
       adapter.updateData(exercises)
     }
     
@@ -50,10 +54,12 @@ class ExerciseActivity : AppCompatActivity() {
     
   }
   
-  
   override fun onResume() {
     super.onResume()
     adapter.mapViewOnResume()
+    lifecycleScope.launch {
+      viewModel.loadExercises()
+    }
   }
   
   override fun onPause() {

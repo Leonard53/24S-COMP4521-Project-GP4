@@ -1,6 +1,5 @@
 package com.comp4521_project_gp4.ui.activity
 
-import MainViewModel
 import android.os.Bundle
 import android.widget.TextView
 import android.content.Intent
@@ -14,6 +13,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.card.MaterialCardView
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -101,7 +101,9 @@ class MainActivity : AppCompatActivity() {
       })
     }
     leadboard_btn.setOnClickListener {
-      startActivity(Intent(this, DashboardActivity::class.java))
+      startActivity(Intent(this, DashboardActivity::class.java).apply {
+        putExtra("user", currentUser)
+      })
     }
     friends_btn.setOnClickListener {
       val intent = Intent(this, FriendsActivity::class.java)

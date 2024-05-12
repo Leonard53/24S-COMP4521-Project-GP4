@@ -3,11 +3,13 @@ package com.comp4521_project_gp4.ui.activity
 import ToolbarFragment
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.backend.aws.User
 import com.comp4521_project_gp4.ui.adapters.DashboardAdapter
 import com.comp4521_project_gp4.viewmodel.DashboardViewModel
 import com.github.mikephil.charting.charts.BarChart
@@ -20,28 +22,9 @@ import com.github.mikephil.charting.utils.ColorTemplate
 
 class DashboardActivity : AppCompatActivity() {
   private val dashboardViewModel: DashboardViewModel by viewModels()
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    setContentView(R.layout.activity_dashboard)
-    
-    // Dynamically add the Toolbar Fragment
-    if (savedInstanceState == null) {
-      supportFragmentManager.beginTransaction()
-        .replace(R.id.toolbar_container, ToolbarFragment())
-        .commit()
-    }
-    
-    // Set up RecyclerView
-    val recyclerView = findViewById<RecyclerView>(R.id.dashboard_recyclerview)
-    val adapter = DashboardAdapter(emptyList())  // Initialize adapter with an empty list
-    recyclerView.adapter = adapter
-    recyclerView.layoutManager = LinearLayoutManager(this)
-    
-    // Observe the ViewModel's LiveData for changes and update the adapter
-    dashboardViewModel.dashboardItems.observe(this) { items ->
-      adapter.updateData(items)
-    }
-    
+  private lateinit var currentUser: User
+  
+  fun setBarChartAfterLeaderboard(userScoreMap: Map<String, Int>) {
     val barChart = findViewById<BarChart>(R.id.barChartt)
     barChart.setDrawBarShadow(false)
     barChart.setDrawValueAboveBar(true)
@@ -62,17 +45,11 @@ class DashboardActivity : AppCompatActivity() {
     setColors: 設定條形圖使用的顏色（從預定義的材料設計顏色中選取）。
     valueTextColor同valueTextSize: 設定數據點上數字嘅顏色同字體大小。
      */
-    
-    
-    val xAxisLabels = arrayOf("Ben", "May", "Tom", "Ana", "Ivy")
-    val dataValues = listOf(
-      BarEntry(0f, 80f),
-      BarEntry(1f, 60f),
-      BarEntry(2f, 70f),
-      BarEntry(3f, 50f),
-      BarEntry(4f, 90f)
-    )
-    
+   println("dllm")
+    val xAxisLabels = userScoreMap.keys
+    val dataValues: List<BarEntry> = xAxisLabels.mapIndexed { index, user ->
+      BarEntry(index.toFloat(), userScoreMap[user]?.toFloat() ?: 0f)
+    }
     val barDataSet = BarDataSet(dataValues, "")
     barDataSet.setColors(*ColorTemplate.MATERIAL_COLORS)
     barDataSet.valueTextColor = Color.BLACK
@@ -101,5 +78,38 @@ class DashboardActivity : AppCompatActivity() {
     val legend = barChart.legend
     legend.isEnabled = false
     barChart.invalidate()
+    barChart.visibility = View.VISIBLE
+  }
+  
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_dashboard)
+    currentUser = intent.getParcelableExtra<User>("user")!!
+    dashboardViewModel.setCurrentUser(currentUser)
+    // Dynamically add the Toolbar Fragment
+    if (savedInstanceState == null) {
+      supportFragmentManager.beginTransaction()
+        .replace(R.id.toolbar_container, ToolbarFragment())
+        .commit()
+    }
+    
+    // Set up RecyclerView
+    val recyclerView = findViewById<RecyclerView>(R.id.dashboard_recyclerview)
+    val adapter = DashboardAdapter(emptyList())  // Initialize adapter with an empty list
+    recyclerView.adapter = adapter
+    recyclerView.layoutManager = LinearLayoutManager(this)
+    
+    // Observe the ViewModel's LiveData for changes and update the adapter
+    dashboardViewModel.dashboardItems.observe(this) { items ->
+      adapter.updateData(items)
+    }
+    val barChart = findViewById<BarChart>(R.id.barChartt)
+    barChart.visibility = View.GONE
+    dashboardViewModel.dashboardVisibility.observe(this) {(visibility, scoreMap) ->
+      if (visibility == View.VISIBLE) {
+        println("jm9")
+        setBarChartAfterLeaderboard(scoreMap)
+      }
+    }
   }
 }
