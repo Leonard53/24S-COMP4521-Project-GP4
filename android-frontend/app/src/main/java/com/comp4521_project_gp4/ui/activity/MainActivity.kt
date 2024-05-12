@@ -122,8 +122,6 @@ class MainActivity : AppCompatActivity() {
     popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
     popup.setOnMenuItemClickListener { menuItem ->
       when (menuItem.itemId) {
-        R.id.menu_profile -> true
-        R.id.menu_settings -> true
         R.id.menu_logout -> true
         else -> false
       }
