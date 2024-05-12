@@ -10,6 +10,7 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.comp4521_project_gp4.R
@@ -18,6 +19,11 @@ import kotlinx.coroutines.launch
 
 class SingIn : AppCompatActivity() {
   lateinit var sharedPref: SharedPreferences
+  private val startForResult =
+    registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { _ ->
+      sharedPref.edit().clear().apply()
+      showSignInSignUpBtn()
+    }
   private fun checkUsernameAndPasswordFilledIn(): Boolean {
     
     val errorText = findViewById<TextView>(R.id.signin_error_text)
@@ -48,19 +54,19 @@ class SingIn : AppCompatActivity() {
     signInBut.visibility = View.GONE
     signInBut.isEnabled = false
     progressBar.visibility = View.VISIBLE
-    progressBar.isEnabled = true
   }
   
   private fun showSignInSignUpBtn() {
     val signInBut = findViewById<Button>(R.id.signin_btn)
     val signUpBut = findViewById<Button>(R.id.signup_btn)
     val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-    signUpBut.visibility = View.VISIBLE
-    signUpBut.isEnabled = true
-    signInBut.visibility = View.VISIBLE
-    signInBut.isEnabled = true
-    progressBar.visibility = View.GONE
-    progressBar.isEnabled = false
+    runOnUiThread {
+      signUpBut.isEnabled = true
+      signInBut.isEnabled = true
+      signUpBut.visibility = View.VISIBLE
+      signInBut.visibility = View.VISIBLE
+      progressBar.visibility = View.GONE
+    }
   }
   
   private fun preSubmitCheck(): User? {
@@ -92,7 +98,7 @@ class SingIn : AppCompatActivity() {
       return null
     }
     sharedPref.edit().putString("username", currentUser.getUsername()).apply()
-    startActivity(mainActivityIntent(currentUser))
+    loggingIn(mainActivityIntent(currentUser))
     return currentUser
   }
   
@@ -105,7 +111,7 @@ class SingIn : AppCompatActivity() {
       return null
     }
     sharedPref.edit().putString("username", currentUser.getUsername()).apply()
-    startActivity(mainActivityIntent(currentUser))
+    loggingIn(mainActivityIntent(currentUser))
     return currentUser
   }
   
@@ -116,8 +122,6 @@ class SingIn : AppCompatActivity() {
   }
   
   override fun onCreate(savedInstanceState: Bundle?) {
-    println("onl9")
-    
     sharedPref = getSharedPreferences("cachedUser", Context.MODE_PRIVATE)
     super.onCreate(savedInstanceState)
     enableEdgeToEdge()
@@ -128,7 +132,7 @@ class SingIn : AppCompatActivity() {
       lifecycleScope.launch {
         val cachedUser = User(cachedUsername)
         cachedUser.signinUser()
-        startActivity(mainActivityIntent(cachedUser))
+        loggingIn(mainActivityIntent(cachedUser))
       }
     }
     showSignInSignUpBtn()
@@ -142,5 +146,9 @@ class SingIn : AppCompatActivity() {
     signInButton.setOnClickListener {
       lifecycleScope.launch { signInUser() }
     }
+  }
+  
+  private fun loggingIn(intent: Intent) {
+    startForResult.launch(intent)
   }
 }

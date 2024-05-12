@@ -1,5 +1,6 @@
 package com.comp4521_project_gp4.ui.activity
 
+import android.app.Activity
 import android.os.Bundle
 import android.widget.TextView
 import android.content.Intent
@@ -124,7 +125,12 @@ class MainActivity : AppCompatActivity() {
     popup.menuInflater.inflate(R.menu.popup_menu, popup.menu)
     popup.setOnMenuItemClickListener { menuItem ->
       when (menuItem.itemId) {
-        R.id.menu_logout -> true
+        R.id.menu_logout -> {
+          val returnIntent = Intent()
+          setResult(Activity.RESULT_OK, returnIntent)
+          finish()
+          true
+        }
         else -> false
       }
     }
