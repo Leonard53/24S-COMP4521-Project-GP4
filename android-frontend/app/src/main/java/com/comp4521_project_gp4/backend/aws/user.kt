@@ -55,6 +55,19 @@ class User(
     currentUserFoodCache.add(food)
   }
   
+  suspend fun updateFoodAndExerciseCache() {
+    currentUserFoodCache.clear()
+    currentUserExerciseCache.clear()
+    val req = GetItemRequest {
+      tableName = USERDB_NAME
+      key = currentUserKeyInDB
+    }
+    val res = ddb.getItem(req)
+    currentUserFoodCache.addAll(Food.getAllFood(
+      res.item?.get("food_log")?.asL() ?: emptyList()))
+    currentUserExerciseCache.addAll(Exercise.getAllExercises(
+      res.item?.get("exercise_log")?.asL() ?: emptyList()))
+  }
   
   fun getCurrentUserFoodCache(): MutableList<Food> {
     return currentUserFoodCache
@@ -167,7 +180,6 @@ class User(
   }
   
   suspend fun addEntries(exerciseOrFood: ExerciseOrFood) {
-    println("on99")
     try {
       val updateReq = exerciseOrFood.updateRequest(this)
       ddb.updateItem(updateReq)
@@ -180,5 +192,4 @@ class User(
       throw e
     }
   }
-  
 }
