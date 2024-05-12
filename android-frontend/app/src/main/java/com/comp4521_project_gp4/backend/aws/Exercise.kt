@@ -38,7 +38,7 @@ data class Exercise(
     val req = UpdateItemRequest {
       tableName = USERDB_NAME
       key = user.getCurrentUserKeyInDB()
-      updateExpression = "SET exercise_log = list_append(exercise_log, :newItem)"
+      updateExpression = "SET exercise_log = list_append(:newItem, exercise_log)"
       expressionAttributeValues = updateItem
     }
     return req
