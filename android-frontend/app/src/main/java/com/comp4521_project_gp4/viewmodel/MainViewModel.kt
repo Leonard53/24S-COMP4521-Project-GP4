@@ -77,6 +77,7 @@ class MainViewModel : ViewModel() {
   
   companion object {
     private val today = LocalDate.now()
+    
     @SuppressLint("ConstantLocale")
     private val weekFields = WeekFields.of(Locale.getDefault())
     private val currentWeek = today.get(weekFields.weekOfWeekBasedYear())

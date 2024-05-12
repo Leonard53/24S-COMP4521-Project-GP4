@@ -1,20 +1,17 @@
 package com.comp4521_project_gp4.ui.activity
 
 import ToolbarFragment
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Criteria
+import android.location.LocationManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import android.content.pm.PackageManager
-import android.location.Criteria
-import android.location.LocationManager
-import android.text.Editable
-import android.text.TextWatcher
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.backend.aws.User
@@ -23,7 +20,6 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -95,8 +91,12 @@ class AddExerciseActivity : AppCompatActivity(), OnMapReadyCallback {
     addExerciseViewModel.validationMessage.observe(this) { message ->
       message?.let {
         // Display the validation message to the user, for example using a Toast
-        Snackbar.make(findViewById(R.id.addActivityContainer), message.toString(), Snackbar.LENGTH_LONG).show()
-
+        Snackbar.make(
+          findViewById(R.id.addActivityContainer),
+          message.toString(),
+          Snackbar.LENGTH_LONG
+        ).show()
+        
         // Reset the validation message in ViewModel after showing it
         addExerciseViewModel.clearValidationMessage()
       }

@@ -104,7 +104,7 @@ class DashboardActivity : AppCompatActivity() {
     }
     val barChart = findViewById<BarChart>(R.id.barChartt)
     barChart.visibility = View.GONE
-    dashboardViewModel.dashboardVisibility.observe(this) {(visibility, scoreMap) ->
+    dashboardViewModel.dashboardVisibility.observe(this) { (visibility, scoreMap) ->
       if (visibility == View.VISIBLE) {
         setBarChartAfterLeaderboard(scoreMap)
       }

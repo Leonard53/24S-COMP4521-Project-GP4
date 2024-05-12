@@ -7,6 +7,6 @@ class ExerciseModel {
     val exerciseDuration: Int,
     val exerciseCalories: Int,
     val latitude: Double? = null,
-    val longitude:  Double? = null,
+    val longitude: Double? = null,
   )
 }

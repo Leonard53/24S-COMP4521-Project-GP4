@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.backend.aws.Food
 
-class FoodAdapter(private val foodList: List<Food>) : RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
+class FoodAdapter(private val foodList: List<Food>) :
+  RecyclerView.Adapter<FoodAdapter.FoodViewHolder>() {
   
   class FoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var foodName: TextView = itemView.findViewById(R.id.food_type)

@@ -13,7 +13,6 @@ import com.comp4521_project_gp4.backend.aws.User
 import com.comp4521_project_gp4.ui.adapters.ExerciseAdapter
 import com.comp4521_project_gp4.viewmodel.ExerciseViewModel
 import com.google.android.material.button.MaterialButton
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class ExerciseActivity : AppCompatActivity() {

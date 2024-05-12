@@ -1,20 +1,20 @@
 package com.comp4521_project_gp4.ui.activity
 
 import android.app.Activity
-import android.os.Bundle
-import android.widget.TextView
 import android.content.Intent
 import android.graphics.Color
+import android.os.Bundle
 import android.view.View
-import com.comp4521_project_gp4.backend.aws.User
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.card.MaterialCardView
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.backend.aws.User
 import com.comp4521_project_gp4.viewmodel.MainViewModel
+import com.google.android.material.card.MaterialCardView
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -53,9 +53,6 @@ class MainActivity : AppCompatActivity() {
     
     loggedInUser.let {
       mainViewModel.setUser(it)
-    } ?: run {
-      // Handle case where no User object was passed in Intent
-      finish()
     }
     
     lifecycleScope.launch {
@@ -131,11 +128,12 @@ class MainActivity : AppCompatActivity() {
           finish()
           true
         }
+        
         else -> false
       }
     }
     popup.setOnDismissListener {
-    // Reset icon to menu icon when the popup is dismissed
+      // Reset icon to menu icon when the popup is dismissed
       menuButton.setImageResource(R.drawable.menu)
     }
     // Set icon to close icon when the popup is shown

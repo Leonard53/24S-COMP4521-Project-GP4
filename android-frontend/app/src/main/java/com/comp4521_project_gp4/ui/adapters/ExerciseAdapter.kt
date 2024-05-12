@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.model.ExerciseModel
 import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
@@ -47,7 +47,9 @@ class ExerciseAdapter(private var cardItemList: List<ExerciseModel.ExerciseItem>
       is CollapsedViewHolder -> {
         holder.exerciseType.text = currentItem.exerciseType
         holder.exerciseDateTime.text = currentItem.exerciseDateTime
-        holder.exerciseCalories.text = currentItem.exerciseCalories.toString()      }
+        holder.exerciseCalories.text = currentItem.exerciseCalories.toString()
+      }
+      
       is ExpandedViewHolder -> {
         holder.exerciseType.text = currentItem.exerciseType
         holder.exerciseDateTime.text = currentItem.exerciseDateTime
@@ -61,12 +63,14 @@ class ExerciseAdapter(private var cardItemList: List<ExerciseModel.ExerciseItem>
     
     // Toggle expanded/collapsed state
     holder.itemView.setOnClickListener {
-      val newExpandedPosition = if (expandedPosition == position) RecyclerView.NO_POSITION else position
+      val newExpandedPosition =
+        if (expandedPosition == position) RecyclerView.NO_POSITION else position
       notifyItemChanged(expandedPosition)
       notifyItemChanged(position)
       expandedPosition = newExpandedPosition
     }
   }
+  
   override fun getItemCount() = cardItemList.size
   
   class CollapsedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -75,9 +79,11 @@ class ExerciseAdapter(private var cardItemList: List<ExerciseModel.ExerciseItem>
     var exerciseCalories: TextView = itemView.findViewById(R.id.exercise_calories)
   }
   
-  class ExpandedViewHolder(itemView: View, mapViewList: MutableList<MapView>) : RecyclerView.ViewHolder(itemView), OnMapReadyCallback {
+  class ExpandedViewHolder(itemView: View, mapViewList: MutableList<MapView>) :
+    RecyclerView.ViewHolder(itemView), OnMapReadyCallback {
     var exerciseType: TextView = itemView.findViewById(R.id.exercise_type_expanded)
-    var exerciseDateTime: TextView = itemView.findViewById<TextView?>(R.id.exercise_date_time_expanded)
+    var exerciseDateTime: TextView =
+      itemView.findViewById<TextView?>(R.id.exercise_date_time_expanded)
     var exerciseCalories: TextView = itemView.findViewById(R.id.exercise_calories_expanded)
     var exerciseDuration: TextView = itemView.findViewById(R.id.exercise_duration_expanded)
     var mapView: MapView = itemView.findViewById(R.id.mapView)
@@ -91,7 +97,7 @@ class ExerciseAdapter(private var cardItemList: List<ExerciseModel.ExerciseItem>
     }
     
     override fun onMapReady(p0: GoogleMap) {
-      p0?.apply {
+      p0.apply {
         // Now you can use the latitude and longitude from the item
         val location = LatLng(exerciseLat, exerciseLng)
         

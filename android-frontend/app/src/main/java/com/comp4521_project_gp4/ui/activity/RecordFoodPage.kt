@@ -2,11 +2,11 @@ package com.comp4521_project_gp4.ui.activity
 
 
 import ToolbarFragment
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.backend.aws.Food

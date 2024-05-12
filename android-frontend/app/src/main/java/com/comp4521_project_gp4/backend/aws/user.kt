@@ -11,7 +11,6 @@ import aws.sdk.kotlin.services.dynamodb.model.PutItemRequest
 import aws.sdk.kotlin.services.dynamodb.model.UpdateItemRequest
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import kotlin.Exception
 
 const val USERDB_NAME = "COMP4521-user-db"
 val ddb = DynamoDbClient {
@@ -63,10 +62,16 @@ class User(
       key = currentUserKeyInDB
     }
     val res = ddb.getItem(req)
-    currentUserFoodCache.addAll(Food.getAllFood(
-      res.item?.get("food_log")?.asL() ?: emptyList()))
-    currentUserExerciseCache.addAll(Exercise.getAllExercises(
-      res.item?.get("exercise_log")?.asL() ?: emptyList()))
+    currentUserFoodCache.addAll(
+      Food.getAllFood(
+        res.item?.get("food_log")?.asL() ?: emptyList()
+      )
+    )
+    currentUserExerciseCache.addAll(
+      Exercise.getAllExercises(
+        res.item?.get("exercise_log")?.asL() ?: emptyList()
+      )
+    )
   }
   
   fun getCurrentUserFoodCache(): MutableList<Food> {

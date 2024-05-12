@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.model.DashboardModel
 
-class DashboardAdapter(private var dashboardItemList: List<DashboardModel.DashboardItem>) : RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder>() {
+class DashboardAdapter(private var dashboardItemList: List<DashboardModel.DashboardItem>) :
+  RecyclerView.Adapter<DashboardAdapter.DashboardViewHolder>() {
   
   class DashboardViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     var friendName: TextView = itemView.findViewById(R.id.dashboard_friend_name)
@@ -16,7 +17,8 @@ class DashboardAdapter(private var dashboardItemList: List<DashboardModel.Dashbo
   }
   
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardViewHolder {
-    val itemView = LayoutInflater.from(parent.context).inflate(R.layout.dashboard_card, parent, false)
+    val itemView =
+      LayoutInflater.from(parent.context).inflate(R.layout.dashboard_card, parent, false)
     return DashboardViewHolder(itemView)
   }
   

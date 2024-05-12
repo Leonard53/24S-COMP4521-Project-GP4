@@ -4,11 +4,10 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.comp4521_project_gp4.model.DashboardModel
 import androidx.lifecycle.viewModelScope
 import com.comp4521_project_gp4.backend.aws.Exercise
-import com.comp4521_project_gp4.backend.aws.Food
 import com.comp4521_project_gp4.backend.aws.User
+import com.comp4521_project_gp4.model.DashboardModel
 import kotlinx.coroutines.launch
 
 class DashboardViewModel : ViewModel() {
@@ -19,7 +18,7 @@ class DashboardViewModel : ViewModel() {
   val dashboardItems: LiveData<List<DashboardModel.DashboardItem>> = _dashboardItems
   val dashboardVisibility: LiveData<DashboardModel.DashboardChartItem> = _dashboardVisibility
   
-
+  
   private val currentUser = MutableLiveData<User>()
   fun setCurrentUser(user: User) {
     currentUser.value = user
@@ -27,19 +26,21 @@ class DashboardViewModel : ViewModel() {
       loadData()
     }
   }
+  
   init {
     viewModelScope.launch {
       loadData()
     }
   }
- 
+  
   suspend fun calculateUserScore(user: User): Int {
     user.updateFoodAndExerciseCache()
     val exercises = user.getCurrentUserExerciseCache()
 //    val foods = user.getCurrentUserFoodCache()
-    val thisWeekExercises = exercises.filter { exercise: Exercise -> MainViewModel.isExerciseInCurrentWeek(exercise)}
+    val thisWeekExercises =
+      exercises.filter { exercise: Exercise -> MainViewModel.isExerciseInCurrentWeek(exercise) }
     val combinedCaloriesInExercise = thisWeekExercises.fold(0)
-    {acc: Int , exercise -> acc + exercise.calories.toInt()}
+    { acc: Int, exercise -> acc + exercise.calories.toInt() }
 //    val thisWeekFood = foods.filter { food: Food -> MainViewModel.isFoodInCurrentWeek(food)}
 //    val combinedCaloriesIntake = thisWeekFood.fold(0)
 //    {acc: Int, food: Food -> acc + food.foodCalories.toInt()}
