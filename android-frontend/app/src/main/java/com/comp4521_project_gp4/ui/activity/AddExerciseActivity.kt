@@ -86,7 +86,8 @@ class AddExerciseActivity : AppCompatActivity(), OnMapReadyCallback {
       override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
       override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
       override fun afterTextChanged(s: Editable?) {
-        addExerciseViewModel.setCalories(s.toString().trim())
+        if (!s.isNullOrEmpty())
+          addExerciseViewModel.setCalories(s.toString().trim())
       }
     })
     
