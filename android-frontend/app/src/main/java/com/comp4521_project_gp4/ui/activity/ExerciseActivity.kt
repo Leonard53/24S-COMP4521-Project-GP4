@@ -41,7 +41,6 @@ class ExerciseActivity : AppCompatActivity() {
     recyclerView.layoutManager = LinearLayoutManager(this)
     
     viewModel.exercises.observe(this) { exercises ->
-      println(exercises)
       adapter.updateData(exercises)
     }
     

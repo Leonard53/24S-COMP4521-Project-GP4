@@ -45,7 +45,6 @@ class DashboardActivity : AppCompatActivity() {
     setColors: 設定條形圖使用的顏色（從預定義的材料設計顏色中選取）。
     valueTextColor同valueTextSize: 設定數據點上數字嘅顏色同字體大小。
      */
-   println("dllm")
     val xAxisLabels = userScoreMap.keys
     val dataValues: List<BarEntry> = xAxisLabels.mapIndexed { index, user ->
       BarEntry(index.toFloat(), userScoreMap[user]?.toFloat() ?: 0f)
@@ -107,7 +106,6 @@ class DashboardActivity : AppCompatActivity() {
     barChart.visibility = View.GONE
     dashboardViewModel.dashboardVisibility.observe(this) {(visibility, scoreMap) ->
       if (visibility == View.VISIBLE) {
-        println("jm9")
         setBarChartAfterLeaderboard(scoreMap)
       }
     }

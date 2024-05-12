@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.comp4521_project_gp4.R
 import com.comp4521_project_gp4.backend.aws.Exercise
 import com.comp4521_project_gp4.backend.aws.User
 import com.google.android.gms.maps.model.LatLng
@@ -53,11 +52,12 @@ class AddExerciseViewModel(application: Application) : AndroidViewModel(applicat
   fun clearValidationMessage() {
     _validationMessage.value = null
   }
+  
   fun setUser(user: User) {
     currentUser = user
   }
   
-  fun validateForm():Boolean {
+  fun validateForm(): Boolean {
     // Check if the exercise type is empty or null
     if (exerciseType.value.isNullOrEmpty()) {
       _validationMessage.value = "Please select the type of exercise."
@@ -67,7 +67,6 @@ class AddExerciseViewModel(application: Application) : AndroidViewModel(applicat
     // Check if the date is empty or null
     if (selectedDate.value.isNullOrEmpty()) {
       _validationMessage.value = "Please select a date."
-      println(validationMessage.value)
       return false
     }
     
@@ -93,8 +92,6 @@ class AddExerciseViewModel(application: Application) : AndroidViewModel(applicat
   }
   
   suspend fun saveData() {
-    println("add")
-    
     // Parse the time to calculate total minutes
     val parts = selectedTime.value?.split(":")?.map { it.trim() }
     if (parts == null || parts.size != 2) {
@@ -118,8 +115,6 @@ class AddExerciseViewModel(application: Application) : AndroidViewModel(applicat
       selectedLocation.value?.longitude ?: 114.263,
       exerciseCalories.value!!.toUInt()
     )
-    
-    println(exercise)
     
     currentUser.addEntries(exercise)
   }

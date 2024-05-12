@@ -24,6 +24,7 @@ class SingIn : AppCompatActivity() {
       sharedPref.edit().clear().apply()
       showSignInSignUpBtn()
     }
+  
   private fun checkUsernameAndPasswordFilledIn(): Boolean {
     
     val errorText = findViewById<TextView>(R.id.signin_error_text)

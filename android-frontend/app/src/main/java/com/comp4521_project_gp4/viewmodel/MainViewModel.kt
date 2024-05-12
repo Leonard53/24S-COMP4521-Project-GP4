@@ -50,7 +50,6 @@ class MainViewModel : ViewModel() {
   }
   
   fun mainScreenOnLoad() {
-    println("main screen on load")
     var weeklyCaloriesBurned = 0
     var weeklyExerciseTime = 0
     var weeklyCaloriesIntake = 0
