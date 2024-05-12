@@ -1,3 +1,6 @@
+package com.comp4521_project_gp4.viewmodel
+
+import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,20 +29,23 @@ class MainViewModel : ViewModel() {
   
   private val _exerciseTime = MutableLiveData<Int>()
   val exerciseTime: LiveData<Int> get() = _exerciseTime
+  private val today = LocalDate.now()
+  private val weekFields = WeekFields.of(Locale.getDefault())
+  private val currentWeek = today.get(weekFields.weekOfWeekBasedYear())
   
   fun setUser(user: User) {
     currentUser = user
   }
   
-  fun updateCaloriesBurned(calories: Int) {
+  private fun updateCaloriesBurned(calories: Int) {
     _caloriesBurned.postValue(calories)
   }
   
-  fun updateCaloriesIntake(calories: Int) {
+  private fun updateCaloriesIntake(calories: Int) {
     _caloriesIntake.postValue(calories)
   }
   
-  fun updateExerciseTime(time: Int) {
+  private fun updateExerciseTime(time: Int) {
     _exerciseTime.postValue(time)
   }
   
@@ -48,55 +54,58 @@ class MainViewModel : ViewModel() {
     var weeklyCaloriesBurned = 0
     var weeklyExerciseTime = 0
     var weeklyCaloriesIntake = 0
-    val today = LocalDate.now()
-    val weekFields = WeekFields.of(Locale.getDefault())
-    val currentWeek = today.get(weekFields.weekOfWeekBasedYear())
     viewModelScope.launch {
       async { currentUser.updateFoodAndExerciseCache() }.await()
       
       currentUser.getCurrentUserExerciseCache().forEach(Consumer { exercise: Exercise ->
-        // Define the formatter for the date pattern "May 11, 2024"
-        val formatter =
-          DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
-        
-        // Parse the date using the formatter
-        val exerciseDate = LocalDate.parse(exercise.date, formatter)
-        
-        // Assuming you have a WeekFields instance for your locale
-        val weekFields =
-          WeekFields.of(Locale.getDefault())
-        
-        // Check if the week of the year matches the current week
-        if (exerciseDate[weekFields.weekOfWeekBasedYear()] == currentWeek) {
+        if (isExerciseInCurrentWeek(exercise)) {
           weeklyCaloriesBurned += exercise.calories.toInt()
           weeklyExerciseTime += exercise.exerciseLengthInMins.toInt()
         }
       })
       
       currentUser.getCurrentUserFoodCache().forEach(Consumer { food: Food ->
-        // Creating a formatter that can handle date and time
-        println("Current Food: ${food.foodCalories}")
-        val formatter =
-          DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        
-        // Parse the LocalDateTime from the string
-        val foodDateTime = LocalDateTime.parse(food.date, formatter)
-        
-        // Convert LocalDateTime to LocalDate
-        val foodDate = foodDateTime.toLocalDate()
-        
-        // Assuming you have a WeekFields instance for your locale
-        val weekFields =
-          WeekFields.of(Locale.getDefault())
-        
         // Check if the week of the year matches the current week
-        if (foodDate[weekFields.weekOfWeekBasedYear()] == currentWeek) {
+        if (isFoodInCurrentWeek(food)) {
           weeklyCaloriesIntake += food.foodCalories.toInt()
         }
       })
       updateCaloriesBurned(weeklyCaloriesBurned)
       updateExerciseTime(weeklyExerciseTime)
       updateCaloriesIntake(weeklyCaloriesIntake)
+    }
+  }
+  
+  companion object {
+    private val today = LocalDate.now()
+    @SuppressLint("ConstantLocale")
+    private val weekFields = WeekFields.of(Locale.getDefault())
+    private val currentWeek = today.get(weekFields.weekOfWeekBasedYear())
+    fun isExerciseInCurrentWeek(exercise: Exercise): Boolean {
+      // Define the formatter for the date pattern "May 11, 2024"
+      val formatter =
+        DateTimeFormatter.ofPattern("MMMM d, yyyy", Locale.ENGLISH)
+      
+      // Parse the date using the formatter
+      val exerciseDate = LocalDate.parse(exercise.date, formatter)
+      
+      // Check if the week of the year matches the current week
+      return exerciseDate[weekFields.weekOfWeekBasedYear()] == currentWeek
+    }
+    
+    fun isFoodInCurrentWeek(food: Food): Boolean {
+      // Creating a formatter that can handle date and time
+      val formatter =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+      
+      // Parse the LocalDateTime from the string
+      val foodDateTime = LocalDateTime.parse(food.date, formatter)
+      
+      // Convert LocalDateTime to LocalDate
+      val foodDate = foodDateTime.toLocalDate()
+      
+      // Check if the week of the year matches the current week
+      return foodDate[weekFields.weekOfWeekBasedYear()] == currentWeek
     }
   }
 }
