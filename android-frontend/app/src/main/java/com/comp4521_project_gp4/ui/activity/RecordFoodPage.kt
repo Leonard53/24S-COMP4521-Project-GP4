@@ -1,6 +1,7 @@
 package com.comp4521_project_gp4.ui.activity
 
 
+import ToolbarFragment
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -21,6 +22,12 @@ class RecordFoodPage : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_record_food_page)
     
+    // Dynamically add the Toolbar Fragment
+    if (savedInstanceState == null) {
+      supportFragmentManager.beginTransaction()
+        .replace(R.id.toolbar_container, ToolbarFragment())
+        .commit()
+    }
     
     var etFoodName = findViewById<EditText>(R.id.etFoodName)
     var btnSaveFood = findViewById<Button>(R.id.btnSaveFood)
@@ -31,7 +38,7 @@ class RecordFoodPage : AppCompatActivity() {
     currentUser = user!!
     
     val currentTime = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-    tvCurrentTime.text = "Eating Time: $currentTime"
+    tvCurrentTime.text = "$currentTime"
     
     
     btnSaveFood.setOnClickListener {

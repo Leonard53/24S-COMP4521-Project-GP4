@@ -1,50 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.AddFood"
     android:orientation="vertical"
-    android:background="@drawable/foodbkk">
+    tools:context=".ui.activity.AddFood">
 
-  <com.google.android.material.button.MaterialButton
-      android:id="@+id/addfoodreturn"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Return"
-      android:textAllCaps="false"
-      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-      android:layout_gravity="center"
-      android:layout_marginTop="18dp"
-      android:textStyle="bold"
-      android:textColor="#1087E6"
-      android:fontFamily="sans-serif"/>
-
-
-  <com.google.android.material.button.MaterialButton
-      android:id="@+id/btnAddFood"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:text="Add +"
-      android:textAllCaps="false"
-      style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-      android:layout_gravity="center"
-      android:layout_marginTop="18dp"
-      android:textStyle="bold"
-      android:textColor="#4CAF50"
-      android:fontFamily="sans-serif"/>
-
-  <ListView
-      android:id="@+id/lvFoodRecords"
+  <FrameLayout
+      android:id="@+id/toolbar_container"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:divider="@android:color/darker_gray"
-      android:dividerHeight="1dp"
-      android:padding="8dp"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="parent">
+    <!-- This FrameLayout will hold the ToolbarFragment -->
+  </FrameLayout>
+
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/rvFoodRecords"
+      android:layout_width="406dp"
+      android:layout_height="731dp"
       android:clipToPadding="false"
+      android:padding="8dp"
       android:scrollbarStyle="outsideOverlay"
-      android:fontFamily="sans-serif"/>
+      app:layout_constraintBottom_toTopOf="@+id/exercise_buttonCard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_container" />
+
+  <com.google.android.material.card.MaterialCardView
+      android:id="@+id/food_buttonCard"
+      android:layout_width="match_parent"
+      android:layout_height="121dp"
+      app:cardBackgroundColor="@android:color/white"
+      app:cardElevation="12dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:shapeAppearanceOverlay="@style/MainPageButtonCardAppearance">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+      <com.google.android.material.button.MaterialButton
+          android:id="@+id/btnAddFood"
+          android:layout_width="368dp"
+          android:layout_height="78dp"
+          android:text="+ Add record"
+          app:backgroundTint="@color/button_primary"
+          app:cornerRadius="15dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+  </com.google.android.material.card.MaterialCardView>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

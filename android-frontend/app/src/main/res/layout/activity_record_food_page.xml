@@ -2,81 +2,204 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addActivityContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.activity.RecordFoodPage"
-    android:background="@drawable/foodr">
+    android:layout_height="match_parent">
 
-  <EditText
-      android:id="@+id/etFoodName"
-      android:layout_width="0dp"
-      android:layout_height="43dp"
-      android:layout_marginEnd="72dp"
-      android:hint="eg: Apple"
-      android:inputType="text"
-      app:layout_constraintBottom_toBottomOf="@+id/tvFoodName"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/tvFoodName" />
-
-  <EditText
-      android:id="@+id/etCalories"
-      android:layout_width="0dp"
-      android:layout_height="43dp"
-      android:layout_marginTop="14dp"
-      android:layout_marginEnd="69dp"
-      android:hint="eg: 256"
-      android:inputType="numberDecimal"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toEndOf="@+id/tvCalories"
-      app:layout_constraintTop_toBottomOf="@+id/etFoodName" />
-
+  <FrameLayout
+      android:id="@+id/toolbar_container"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_constraintTop_toTopOf="parent">
+    <!-- This FrameLayout will hold the ToolbarFragment -->
+  </FrameLayout>
 
   <TextView
-      android:id="@+id/tvCurrentTime"
+      android:id="@+id/main_cardTitle1"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_marginTop="260dp"
-      android:text="Eating time: "
+      android:layout_marginBottom="28dp"
+      android:text="Add Record"
+      android:textColor="@color/material_dynamic_neutral_variant30"
+      android:textSize="25sp"
+      android:textStyle="bold"
+      app:layout_constraintBottom_toTopOf="@+id/exerciseCard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.064"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_container"
+      app:layout_constraintVertical_bias="1.0" />
+
+  <androidx.cardview.widget.CardView
+      android:id="@+id/exerciseCard"
+      android:layout_width="366dp"
+      android:layout_height="388dp"
+      android:layout_margin="16dp"
+      app:cardCornerRadius="8dp"
+      app:cardElevation="6dp"
+      app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      app:layout_constraintTop_toBottomOf="@id/toolbar_container">
 
-  <TextView
-      android:id="@+id/tvFoodName"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="52dp"
-      android:layout_marginEnd="12dp"
-      android:layout_marginBottom="23dp"
-      android:text="Food Name: "
-      android:textSize="25dp"
-      app:layout_constraintBottom_toTopOf="@+id/tvCalories"
-      app:layout_constraintEnd_toStartOf="@+id/etFoodName"
-      app:layout_constraintStart_toStartOf="parent" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-  <TextView
-      android:id="@+id/tvCalories"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginStart="16dp"
-      android:layout_marginTop="199dp"
-      android:layout_marginEnd="12dp"
-      android:text="Calories intake: "
-      android:textSize="25dp"
-      app:layout_constraintEnd_toStartOf="@+id/etCalories"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/activityTypeInputLayout"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
 
-  <Button
-      android:id="@+id/btnSaveFood"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_marginTop="304dp"
-      android:text="SAVE"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintHorizontal_bias="0.498"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etFoodName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Food"
+            android:inputType="text" />
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/foodIntakeTimeLayout"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toTopOf="@+id/caloriesInputLayout"
+          app:layout_constraintTop_toBottomOf="@+id/activityTypeInputLayout"
+          tools:layout_editor_absoluteX="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCalories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Calories"
+            android:inputType="number" />
+      </com.google.android.material.textfield.TextInputLayout>
+
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/caloriesInputLayout"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toTopOf="@+id/btnSaveFood"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintHorizontal_bias="0.0"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/foodIntakeTimeLayout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tvCurrentTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Time"
+            android:enabled="false"
+            android:focusable="false"
+            android:clickable="false" />
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.button.MaterialButton
+          android:id="@+id/btnSaveFood"
+          android:layout_width="match_parent"
+          android:layout_height="63dp"
+          android:layout_gravity="center"
+          android:text="Save Record"
+          app:backgroundTint="@color/button_primary"
+          app:cornerRadius="15dp"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:orientation="vertical"-->
+<!--    tools:context=".ui.activity.RecordFoodPage">-->
+
+<!--  <EditText-->
+<!--      android:id="@+id/etFoodName"-->
+<!--      android:layout_width="0dp"-->
+<!--      android:layout_height="43dp"-->
+<!--      android:layout_marginEnd="72dp"-->
+<!--      android:hint="eg: Apple"-->
+<!--      android:inputType="text"-->
+<!--      app:layout_constraintBottom_toBottomOf="@+id/tvFoodName"-->
+<!--      app:layout_constraintEnd_toEndOf="parent"-->
+<!--      app:layout_constraintStart_toEndOf="@+id/tvFoodName" />-->
+
+<!--  <EditText-->
+<!--      android:id="@+id/etCalories"-->
+<!--      android:layout_width="0dp"-->
+<!--      android:layout_height="43dp"-->
+<!--      android:layout_marginTop="14dp"-->
+<!--      android:layout_marginEnd="69dp"-->
+<!--      android:hint="eg: 256"-->
+<!--      android:inputType="numberDecimal"-->
+<!--      app:layout_constraintEnd_toEndOf="parent"-->
+<!--      app:layout_constraintStart_toEndOf="@+id/tvCalories"-->
+<!--      app:layout_constraintTop_toBottomOf="@+id/etFoodName" />-->
+
+
+<!--  <TextView-->
+<!--      android:id="@+id/tvCurrentTime"-->
+<!--      android:layout_width="wrap_content"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginTop="260dp"-->
+<!--      android:text="Eating time: "-->
+<!--      app:layout_constraintEnd_toEndOf="parent"-->
+<!--      app:layout_constraintStart_toStartOf="parent"-->
+<!--      app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--  <TextView-->
+<!--      android:id="@+id/tvFoodName"-->
+<!--      android:layout_width="wrap_content"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginStart="52dp"-->
+<!--      android:layout_marginEnd="12dp"-->
+<!--      android:layout_marginBottom="23dp"-->
+<!--      android:text="Food Name: "-->
+<!--      android:textSize="25dp"-->
+<!--      app:layout_constraintBottom_toTopOf="@+id/tvCalories"-->
+<!--      app:layout_constraintEnd_toStartOf="@+id/etFoodName"-->
+<!--      app:layout_constraintStart_toStartOf="parent" />-->
+
+<!--  <TextView-->
+<!--      android:id="@+id/tvCalories"-->
+<!--      android:layout_width="wrap_content"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginStart="16dp"-->
+<!--      android:layout_marginTop="199dp"-->
+<!--      android:layout_marginEnd="12dp"-->
+<!--      android:text="Calories intake: "-->
+<!--      android:textSize="25dp"-->
+<!--      app:layout_constraintEnd_toStartOf="@+id/etCalories"-->
+<!--      app:layout_constraintStart_toStartOf="parent"-->
+<!--      app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--  <Button-->
+<!--      android:id="@+id/btnSaveFood"-->
+<!--      android:layout_width="wrap_content"-->
+<!--      android:layout_height="wrap_content"-->
+<!--      android:layout_marginTop="304dp"-->
+<!--      android:text="SAVE"-->
+<!--      app:layout_constraintEnd_toEndOf="parent"-->
+<!--      app:layout_constraintHorizontal_bias="0.498"-->
+<!--      app:layout_constraintStart_toStartOf="parent"-->
+<!--      app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
