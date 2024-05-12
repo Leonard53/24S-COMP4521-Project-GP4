@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.comp4521_project_gp4.R
+import com.comp4521_project_gp4.backend.aws.User
 import com.comp4521_project_gp4.ui.adapters.DashboardAdapter
 import com.comp4521_project_gp4.viewmodel.DashboardViewModel
 import com.github.mikephil.charting.charts.BarChart
@@ -20,10 +21,12 @@ import com.github.mikephil.charting.utils.ColorTemplate
 
 class DashboardActivity : AppCompatActivity() {
   private val dashboardViewModel: DashboardViewModel by viewModels()
+  private lateinit var currentUser: User
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_dashboard)
-    
+    currentUser = intent.getParcelableExtra<User>("user")!!
+    dashboardViewModel.setCurrentUser(currentUser)
     // Dynamically add the Toolbar Fragment
     if (savedInstanceState == null) {
       supportFragmentManager.beginTransaction()
@@ -101,5 +104,11 @@ class DashboardActivity : AppCompatActivity() {
     val legend = barChart.legend
     legend.isEnabled = false
     barChart.invalidate()
+    
+    
+    
+    
+    
+    
   }
 }

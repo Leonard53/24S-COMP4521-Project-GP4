@@ -101,7 +101,9 @@ class MainActivity : AppCompatActivity() {
       })
     }
     leadboard_btn.setOnClickListener {
-      startActivity(Intent(this, DashboardActivity::class.java))
+      startActivity(Intent(this, DashboardActivity::class.java).apply {
+        putExtra("user", currentUser)
+      })
     }
     friends_btn.setOnClickListener {
       val intent = Intent(this, FriendsActivity::class.java)
