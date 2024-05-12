@@ -25,9 +25,7 @@ class ExerciseActivity : AppCompatActivity() {
     setContentView(R.layout.activity_exercise)
     
     currentUser = intent.getParcelableExtra<User>("user")!!
-//    currentUser.let {
-//      ExerciseViewModel.setUser(it)
-//    }
+    viewModel.setUser(currentUser)
     
     val recyclerView: RecyclerView = findViewById(R.id.exercise_recyclerView)
     // Initialize the adapter with the data

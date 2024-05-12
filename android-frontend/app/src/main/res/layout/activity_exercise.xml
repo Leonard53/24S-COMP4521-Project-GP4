@@ -15,31 +15,31 @@
     <!-- This FrameLayout will hold the ToolbarFragment -->
   </FrameLayout>
 
-    <TextView
-        android:id="@+id/main_cardTitle1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="44dp"
-        android:text="Activity History"
-        android:textColor="@color/material_dynamic_neutral_variant30"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.056"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar_container" />
+  <TextView
+      android:id="@+id/main_cardTitle1"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="10dp"
+      android:text="Activity History"
+      android:textColor="@color/material_dynamic_neutral_variant30"
+      android:textSize="25sp"
+      android:textStyle="bold"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.056"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/toolbar_container" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exercise_recyclerView"
-        android:layout_width="410dp"
-        android:layout_height="645dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/exercise_buttonCard"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.157"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_cardTitle1"
-        app:layout_constraintVertical_bias="0.003" />
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/exercise_recyclerView"
+      android:layout_width="410dp"
+      android:layout_height="645dp"
+      android:layout_marginTop="8dp"
+      app:layout_constraintBottom_toTopOf="@+id/exercise_buttonCard"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.157"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/main_cardTitle1"
+      app:layout_constraintVertical_bias="0.003" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/exercise_buttonCard"
